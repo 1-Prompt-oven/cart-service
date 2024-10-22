@@ -50,13 +50,6 @@ public class CartRestController {
 		return ResponseEntity.ok(carts.stream().map(cartVoMapper::toResponseVo).toList());
 	}
 
-	@DeleteMapping("/{productUuid}")
-	@Operation(summary = "장바구니 항목 삭제 API", tags = {"장바구니"})
-	public ResponseEntity<String> deleteCartItem(@RequestBody CartDeleteRequestVo cartDeleteRequestVo) {
-		cartUseCase.deleteCartItem(cartDeleteRequestVo.getMemberUuid(), cartDeleteRequestVo.getProductUuid());
-		return ResponseEntity.ok("장바구니 항목 삭제 성공");
-	}
-
 	@PutMapping("/{productUuid}")
 	@Operation(summary = "장바구니 선택 상태 변경 API", tags = {"장바구니"})
 	public ResponseEntity<String> updateCartItem(@PathVariable String productUuid,
@@ -64,5 +57,12 @@ public class CartRestController {
 		CartUpdateDto cartUpdateDto = cartUpdateVo.toDto(productUuid);
 		cartUseCase.updateCartItem(cartUpdateDto);
 		return ResponseEntity.ok("장바구니 선택 상태 변경 성공");
+	}
+
+	@DeleteMapping("/{productUuid}")
+	@Operation(summary = "장바구니 항목 삭제 API", tags = {"장바구니"})
+	public ResponseEntity<String> deleteCartItem(@RequestBody CartDeleteRequestVo cartDeleteRequestVo) {
+		cartUseCase.deleteCartItem(cartDeleteRequestVo.getMemberUuid(), cartDeleteRequestVo.getProductUuid());
+		return ResponseEntity.ok("장바구니 항목 삭제 성공");
 	}
 }
