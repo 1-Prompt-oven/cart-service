@@ -34,7 +34,7 @@ public class CartRepositoryImpl implements CartRepositoryPort {
 	@Override
 	public List<Cart> getCart(String memberUuid) {
 
-		List<CartEntity> cartEntities = cartJpaRepository.findByMemberUuid(memberUuid);
+		List<CartEntity> cartEntities = cartJpaRepository.findByMemberUuidAndDeletedFalse(memberUuid);
 
 		return cartEntities.stream()
 			.map(cartEntityMapper::toDomain)
@@ -72,7 +72,7 @@ public class CartRepositoryImpl implements CartRepositoryPort {
 
 	@Override
 	public void clearCartByMemberUuid(String memberUuid) {
-		List<CartEntity> cartEntities = cartJpaRepository.findByMemberUuid(memberUuid);
+		List<CartEntity> cartEntities = cartJpaRepository.findByMemberUuidAndDeletedFalse(memberUuid);
 		for (CartEntity cartEntity : cartEntities) {
 			cartEntity.setDeleted(true);  // 소프트 삭제 처리
 			cartJpaRepository.save(cartEntity);
