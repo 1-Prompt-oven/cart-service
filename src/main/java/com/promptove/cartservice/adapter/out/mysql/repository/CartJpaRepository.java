@@ -10,7 +10,7 @@ public interface CartJpaRepository extends JpaRepository<CartEntity, Long> {
 
 	CartEntity findByProductUuidAndMemberUuid(String productUuid, String memberUuid);
 
-	List<CartEntity> findByMemberUuid(String memberUuid);
+	List<CartEntity> findByMemberUuidAndDeletedFalse(String memberUuid);
 
 	void deleteByMemberUuidAndProductUuid(String memberUuid, String productUuid);
 
