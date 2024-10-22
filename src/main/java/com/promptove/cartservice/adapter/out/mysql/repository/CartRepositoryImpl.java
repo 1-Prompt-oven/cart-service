@@ -21,14 +21,14 @@ public class CartRepositoryImpl implements CartRepositoryPort {
 	private final CartEntityMapper cartEntityMapper;
 
 	@Override
-	public void save(Cart cart) {
-		cartJpaRepository.save(cartEntityMapper.toEntity(cart));
-	}
-
-	@Override
 	public Cart getCartByProductUuidAndMemberUuid(String productUuid, String memberUuid) {
 		CartEntity cartEntity = cartJpaRepository.findByProductUuidAndMemberUuid(productUuid, memberUuid);
 		return cartEntityMapper.toDomain(cartEntity);
+	}
+
+	@Override
+	public void save(Cart cart) {
+		cartJpaRepository.save(cartEntityMapper.toEntity(cart));
 	}
 
 	@Override
@@ -42,17 +42,17 @@ public class CartRepositoryImpl implements CartRepositoryPort {
 	}
 
 	@Override
-	public void deleteCartItem(String memberUuid, String productUuid) {
-		CartEntity cartEntity = cartJpaRepository.findByProductUuidAndMemberUuid(productUuid, memberUuid);
-		cartEntity.setDeleted(true);
-		cartJpaRepository.save(cartEntity);
-	}
-
-	@Override
 	public void updateCartItem(CartUpdateDto cartUpdateDto) {
 		CartEntity cartEntity = cartJpaRepository.findByProductUuidAndMemberUuid(cartUpdateDto.getProductUuid(),
 			cartUpdateDto.getMemberUuid());
 		cartEntity.setSelected(cartUpdateDto.isSelected());
+		cartJpaRepository.save(cartEntity);
+	}
+
+	@Override
+	public void deleteCartItem(String memberUuid, String productUuid) {
+		CartEntity cartEntity = cartJpaRepository.findByProductUuidAndMemberUuid(productUuid, memberUuid);
+		cartEntity.setDeleted(true);
 		cartJpaRepository.save(cartEntity);
 	}
 

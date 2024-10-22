@@ -49,14 +49,14 @@ public class CartService implements CartUseCase {
 
 	@Transactional
 	@Override
-	public void deleteCartItem(String memberUuid, String productUuid) {
-		cartRepositoryPort.deleteCartItem(memberUuid, productUuid);
+	public void updateCartItem(CartUpdateDto cartUpdateDto) {
+		cartRepositoryPort.updateCartItem(cartUpdateDto);
 	}
 
 	@Transactional
 	@Override
-	public void updateCartItem(CartUpdateDto cartUpdateDto) {
-		cartRepositoryPort.updateCartItem(cartUpdateDto);
+	public void deleteCartItem(String memberUuid, String productUuid) {
+		cartRepositoryPort.deleteCartItem(memberUuid, productUuid);
 	}
 
 	// 제품 삭제 시 장바구니에서 해당 제품 제거 (소프트 삭제)

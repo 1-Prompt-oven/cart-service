@@ -13,9 +13,9 @@ public interface CartUseCase {
 
 	List<Cart> getCart(String memberUuid);
 
-	void deleteCartItem(String memberUuid, String productUuid);
-
 	void updateCartItem(CartUpdateDto cartUpdateDto);
+
+	void deleteCartItem(String memberUuid, String productUuid);
 
 	// 제품 삭제 시 장바구니에서 항목 삭제
 	void deleteCartItemByProductUuid(String productUuid);
