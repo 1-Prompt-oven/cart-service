@@ -8,11 +8,11 @@ import com.promptove.cartservice.adapter.out.mysql.entity.CartEntity;
 
 public interface CartJpaRepository extends JpaRepository<CartEntity, Long> {
 
+	CartEntity findByProductUuidAndMemberUuid(String productUuid, String memberUuid);
+
 	List<CartEntity> findByMemberUuid(String memberUuid);
 
 	void deleteByMemberUuidAndProductUuid(String memberUuid, String productUuid);
-
-	CartEntity findByProductUuidAndMemberUuid(String productUuid, String memberUuid);
 
 	List<CartEntity> findByProductUuid(String productUuid);
 }
