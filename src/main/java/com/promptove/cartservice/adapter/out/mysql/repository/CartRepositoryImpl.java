@@ -43,15 +43,10 @@ public class CartRepositoryImpl implements CartRepositoryPort {
 
 	@Override
 	public void deleteCartItem(String memberUuid, String productUuid) {
-		cartJpaRepository.deleteByMemberUuidAndProductUuid(memberUuid, productUuid);
+		CartEntity cartEntity = cartJpaRepository.findByProductUuidAndMemberUuid(productUuid, memberUuid);
+		cartEntity.setDeleted(true);
+		cartJpaRepository.save(cartEntity);
 	}
-
-	// @Override
-	// public void softDeleteCartItem(String memberUuid, String productUuid) {
-	// 	CartEntity cartEntity = cartJpaRepository.findByProductUuid(productUuid);
-	// 	cartEntity.setDeleted(true);
-	// 	cartJpaRepository.save(cartEntity);
-	// }
 
 	@Override
 	public void updateCartItem(CartUpdateDto cartUpdateDto) {

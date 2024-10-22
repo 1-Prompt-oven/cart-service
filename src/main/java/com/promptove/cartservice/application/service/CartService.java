@@ -50,7 +50,6 @@ public class CartService implements CartUseCase {
 	@Transactional
 	@Override
 	public void deleteCartItem(String memberUuid, String productUuid) {
-		// cartMysqlRepositoryPort.softDeleteCartItem(memberUuid, productUuid);
 		cartRepositoryPort.deleteCartItem(memberUuid, productUuid);
 	}
 
