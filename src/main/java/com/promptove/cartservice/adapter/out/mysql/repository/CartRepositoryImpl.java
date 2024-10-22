@@ -22,8 +22,13 @@ public class CartRepositoryImpl implements CartRepositoryPort {
 
 	@Override
 	public void save(Cart cart) {
-
 		cartJpaRepository.save(cartEntityMapper.toEntity(cart));
+	}
+
+	@Override
+	public Cart getCartByProductUuidAndMemberUuid(String productUuid, String memberUuid) {
+		CartEntity cartEntity = cartJpaRepository.findByProductUuidAndMemberUuid(productUuid, memberUuid);
+		return cartEntityMapper.toDomain(cartEntity);
 	}
 
 	@Override

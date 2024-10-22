@@ -24,9 +24,22 @@ public class CartService implements CartUseCase {
 	@Override
 	@Transactional
 	public void createCart(CartRequestDto cartRequestDto) {
-		cartRepositoryPort.save(
-			Cart.from(cartRequestDto.getMemberUuid(), cartRequestDto.getProductUuid(), cartRequestDto.isSelected(),
-				cartRequestDto.isDeleted(), cartRequestDto.getCreatedAt()));
+
+		Cart cart = cartRepositoryPort.getCartByProductUuidAndMemberUuid(cartRequestDto.getProductUuid(),
+			cartRequestDto.getMemberUuid());
+
+		// 예전에 담은 적이 없으면
+		if (cart == null) {
+			cartRepositoryPort.save(
+				Cart.from(cartRequestDto.getMemberUuid(), cartRequestDto.getProductUuid(), cartRequestDto.isSelected(),
+					cartRequestDto.isDeleted(), cartRequestDto.getCreatedAt()));
+		} else {
+			// 예전에 담은 적이 있고 삭제 된 상태면
+			if (cart.isDeleted()) {
+				cart.updateDeleted(false);
+				cartRepositoryPort.save(cart);
+			}
+		}
 	}
 
 	@Override
