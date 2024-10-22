@@ -3,7 +3,6 @@ package com.promptove.cartservice.application.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,12 +16,9 @@ import com.promptove.cartservice.domain.Cart;
 public class CartService implements CartUseCase {
 
 	private final CartRepositoryPort cartRepositoryPort;
-	private final KafkaTemplate<String, Object> kafkaTemplate;  // Kafka 발행자
 
-	public CartService(@Qualifier("cartMysqlAdapter") CartRepositoryPort cartRepositoryPort,
-		KafkaTemplate<String, Object> kafkaTemplate) {
+	public CartService(@Qualifier("cartMysqlAdapter") CartRepositoryPort cartRepositoryPort) {
 		this.cartRepositoryPort = cartRepositoryPort;
-		this.kafkaTemplate = kafkaTemplate;
 	}
 
 	@Override
@@ -43,14 +39,12 @@ public class CartService implements CartUseCase {
 	public void deleteCartItem(String memberUuid, String productUuid) {
 		// cartMysqlRepositoryPort.softDeleteCartItem(memberUuid, productUuid);
 		cartRepositoryPort.deleteCartItem(memberUuid, productUuid);
-		// kafkaTemplate.send("cart-delete-event", new CartEvent(productUuid, EventType.DELETE));
 	}
 
 	@Transactional
 	@Override
 	public void updateCartItem(CartUpdateDto cartUpdateDto) {
 		cartRepositoryPort.updateCartItem(cartUpdateDto);
-		// kafkaTemplate.send("cart-update-event", new CartEvent(cartUpdateDto.getProductUuid(), EventType.UPDATE));
 	}
 
 	// 제품 삭제 시 장바구니에서 해당 제품 제거 (소프트 삭제)
