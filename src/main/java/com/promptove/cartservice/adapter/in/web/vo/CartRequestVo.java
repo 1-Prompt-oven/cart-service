@@ -12,16 +12,14 @@ import lombok.Getter;
 public class CartRequestVo {
 	private String memberUuid;
 	private String productUuid;
-	private boolean selected;
-	private boolean deleted;
 	private LocalDateTime createdAt;
 
 	public CartRequestDto toDto() {
 		return CartRequestDto.builder()
 			.memberUuid(memberUuid)
 			.productUuid(productUuid)
-			.selected(selected)
-			.deleted(deleted)
+			.selected(true)
+			.deleted(false)
 			.createdAt(createdAt)
 			.build();
 	}

@@ -10,6 +10,8 @@ public interface CartRepositoryPort {
 
 	void save(Cart cart);
 
+	Cart getCartByProductUuidAndMemberUuid(String productUuid, String memberUuid);
+
 	List<Cart> getCart(String memberUuid);
 
 	void deleteCartItem(String memberUuid, String productUuid);

@@ -26,8 +26,12 @@ public class Cart {
 		this.createdAt = createdAt;
 	}
 
-	public void update(boolean selected) {
+	public void updateSelected(boolean selected) {
 		this.selected = selected;
+	}
+
+	public void updateDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 
 	public static Cart from(String memberUuid, String productUuid, boolean selected, boolean deleted,
