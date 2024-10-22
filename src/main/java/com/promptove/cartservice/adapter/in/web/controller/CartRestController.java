@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.promptove.cartservice.adapter.in.mapper.CartVoMapper;
 import com.promptove.cartservice.adapter.in.web.dto.CartUpdateDto;
+import com.promptove.cartservice.adapter.in.web.vo.CartDeleteRequestVo;
 import com.promptove.cartservice.adapter.in.web.vo.CartRequestVo;
 import com.promptove.cartservice.adapter.in.web.vo.CartResponseVo;
 import com.promptove.cartservice.adapter.in.web.vo.CartUpdateVo;
@@ -51,8 +52,8 @@ public class CartRestController {
 
 	@DeleteMapping("/{productUuid}")
 	@Operation(summary = "장바구니 항목 삭제 API", tags = {"장바구니"})
-	public ResponseEntity<String> deleteCartItem(@RequestParam String memberUuid, @PathVariable String productUuid) {
-		cartUseCase.deleteCartItem(memberUuid, productUuid);
+	public ResponseEntity<String> deleteCartItem(@RequestBody CartDeleteRequestVo cartDeleteRequestVo) {
+		cartUseCase.deleteCartItem(cartDeleteRequestVo.getMemberUuid(), cartDeleteRequestVo.getProductUuid());
 		return ResponseEntity.ok("장바구니 항목 삭제 성공");
 	}
 

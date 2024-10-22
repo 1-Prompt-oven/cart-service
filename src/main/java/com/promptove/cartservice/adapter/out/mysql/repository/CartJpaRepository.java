@@ -12,7 +12,5 @@ public interface CartJpaRepository extends JpaRepository<CartEntity, Long> {
 
 	List<CartEntity> findByMemberUuidAndDeletedFalse(String memberUuid);
 
-	void deleteByMemberUuidAndProductUuid(String memberUuid, String productUuid);
-
 	List<CartEntity> findByProductUuid(String productUuid);
 }
