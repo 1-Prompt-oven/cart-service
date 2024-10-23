@@ -1,4 +1,4 @@
-package com.promptove.cartservice.config;
+package com.promptove.cartservice.global.config;
 
 import java.util.HashMap;
 import java.util.Map;

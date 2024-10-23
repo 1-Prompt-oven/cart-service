@@ -6,11 +6,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.promptove.cartservice.adapter.in.web.dto.CartRequestDto;
-import com.promptove.cartservice.adapter.in.web.dto.CartUpdateDto;
+import com.promptove.cartservice.application.port.dto.CartDto;
 import com.promptove.cartservice.application.port.in.CartUseCase;
 import com.promptove.cartservice.application.port.out.CartRepositoryPort;
-import com.promptove.cartservice.domain.Cart;
+import com.promptove.cartservice.domain.model.Cart;
 
 @Service
 public class CartService implements CartUseCase {
@@ -23,23 +22,24 @@ public class CartService implements CartUseCase {
 
 	@Override
 	@Transactional
-	public void createCart(CartRequestDto cartRequestDto) {
+	public void createCart(CartDto cartDto) {
 
-		Cart cart = cartRepositoryPort.getCartByProductUuidAndMemberUuid(cartRequestDto.getProductUuid(),
-			cartRequestDto.getMemberUuid());
+		cartRepositoryPort.save(cartDto);
 
-		// 예전에 담은 적이 없으면
-		if (cart == null) {
-			cartRepositoryPort.save(
-				Cart.from(cartRequestDto.getMemberUuid(), cartRequestDto.getProductUuid(), cartRequestDto.isSelected(),
-					cartRequestDto.isDeleted(), cartRequestDto.getCreatedAt()));
-		} else {
-			// 예전에 담은 적이 있고 삭제 된 상태면
-			if (cart.isDeleted()) {
-				cart.updateDeleted(false);
-				cartRepositoryPort.save(cart);
-			}
-		}
+		// cartRepositoryPort.getCartByProductUuidAndMemberUuid(cartDto);
+
+		// // 예전에 담은 적이 없으면
+		// if (cart == null) {
+		// 	cartRepositoryPort.save(
+		// 		Cart.from(cartDto.getMemberUuid(), cartDto.getProductUuid(), cartDto.isSelected(),
+		// 			cartDto.isDeleted(), cartDto.getCreatedAt()));
+		// } else {
+		// 	// 예전에 담은 적이 있고 삭제 된 상태면
+		// 	if (cart.isDeleted()) {
+		// 		cart.updateDeleted(false);
+		// 		cartRepositoryPort.save(cart);
+		// 	}
+		// }
 	}
 
 	@Override
@@ -49,8 +49,14 @@ public class CartService implements CartUseCase {
 
 	@Transactional
 	@Override
-	public void updateCartItem(CartUpdateDto cartUpdateDto) {
-		cartRepositoryPort.updateCartItem(cartUpdateDto);
+	public void updateCartItem(String memberUuid, String productUuid, boolean isSelected) {
+		Cart cart = cartRepositoryPort.getCartByProductUuidAndMemberUuid(productUuid, memberUuid).orElse(null);
+		if (cart == null) {
+			throw new IllegalArgumentException("해당 제품이 장바구니에 없습니다.");
+		} else {
+			cart.updateSelected(isSelected);
+			cartRepositoryPort.updateCartItem(cart);
+		}
 	}
 
 	@Transactional

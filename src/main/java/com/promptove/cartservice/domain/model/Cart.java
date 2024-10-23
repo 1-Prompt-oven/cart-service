@@ -1,4 +1,4 @@
-package com.promptove.cartservice.domain;
+package com.promptove.cartservice.domain.model;
 
 import java.time.LocalDateTime;
 

@@ -2,19 +2,20 @@ package com.promptove.cartservice.adapter.out.mysql.mapper;
 
 import org.springframework.stereotype.Component;
 
+import com.promptove.cartservice.application.port.dto.CartDto;
 import com.promptove.cartservice.adapter.out.mysql.entity.CartEntity;
-import com.promptove.cartservice.domain.Cart;
+import com.promptove.cartservice.domain.model.Cart;
 
 @Component
 public class CartEntityMapper {
 
-	public CartEntity toEntity(Cart cart) {
+	public CartEntity toEntity(CartDto cartDto) {
 		return CartEntity.builder()
-			.memberUuid(cart.getMemberUuid())
-			.productUuid(cart.getProductUuid())
-			.selected(cart.isSelected())
-			.deleted(cart.isDeleted())
-			.createdAt(cart.getCreatedAt())
+			.memberUuid(cartDto.getMemberUuid())
+			.productUuid(cartDto.getProductUuid())
+			.selected(cartDto.isSelected())
+			.deleted(cartDto.isDeleted())
+			.createdAt(cartDto.getCreatedAt())
 			.build();
 	}
 

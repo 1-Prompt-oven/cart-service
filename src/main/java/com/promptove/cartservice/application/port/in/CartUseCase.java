@@ -2,18 +2,17 @@ package com.promptove.cartservice.application.port.in;
 
 import java.util.List;
 
-import com.promptove.cartservice.adapter.in.web.dto.CartRequestDto;
-import com.promptove.cartservice.adapter.in.web.dto.CartUpdateDto;
-import com.promptove.cartservice.domain.Cart;
+import com.promptove.cartservice.application.port.dto.CartDto;
+import com.promptove.cartservice.domain.model.Cart;
 
 //input port
 public interface CartUseCase {
 
-	void createCart(CartRequestDto cartRequestDto);
+	void createCart(CartDto cartDto);
 
 	List<Cart> getCart(String memberUuid);
 
-	void updateCartItem(CartUpdateDto cartUpdateDto);
+	void updateCartItem(String memberUuid, String productUuid, boolean isSelected);
 
 	void deleteCartItem(String memberUuid, String productUuid);
 

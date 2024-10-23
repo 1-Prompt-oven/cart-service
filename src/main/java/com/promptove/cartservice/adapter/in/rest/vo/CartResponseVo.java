@@ -1,4 +1,4 @@
-package com.promptove.cartservice.adapter.in.web.vo;
+package com.promptove.cartservice.adapter.in.rest.vo;
 
 import java.time.LocalDateTime;
 

@@ -1,4 +1,4 @@
-package com.promptove.cartservice.config;
+package com.promptove.cartservice.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
