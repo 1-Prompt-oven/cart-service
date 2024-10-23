@@ -2,13 +2,12 @@ package com.promptove.cartservice.application.port.in;
 
 import java.util.List;
 
-import com.promptove.cartservice.application.port.dto.CartDto;
 import com.promptove.cartservice.domain.model.Cart;
 
 //input port
 public interface CartUseCase {
 
-	void createCart(CartDto cartDto);
+	void createCart(CartRequestDto cartRequestDto);
 
 	List<Cart> getCart(String memberUuid);
 

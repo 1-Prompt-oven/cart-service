@@ -3,15 +3,15 @@ package com.promptove.cartservice.application.port.out;
 import java.util.List;
 import java.util.Optional;
 
-import com.promptove.cartservice.application.port.dto.CartDto;
+import com.promptove.cartservice.application.port.in.CartRequestDto;
 import com.promptove.cartservice.domain.model.Cart;
 
 //output port
 public interface CartRepositoryPort {
 
-	Optional<Cart> getCartByProductUuidAndMemberUuid(String productUuid, String memberUuid);
+	Optional<CartRequestDto> getCartByProductUuidAndMemberUuid(Cart cart);
 
-	void save(CartDto cartDto);
+	void save(CartTransactionDto cartTransactionDto);
 
 	List<Cart> getCart(String memberUuid);
 

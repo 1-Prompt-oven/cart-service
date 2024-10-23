@@ -44,5 +44,4 @@ public class Cart {
 			.createdAt(createdAt)
 			.build();
 	}
-
 }

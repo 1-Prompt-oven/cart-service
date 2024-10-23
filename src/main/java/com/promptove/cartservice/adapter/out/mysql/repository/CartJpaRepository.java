@@ -9,9 +9,6 @@ import com.promptove.cartservice.adapter.out.mysql.entity.CartEntity;
 
 public interface CartJpaRepository extends JpaRepository<CartEntity, Long> {
 
-	Optional<CartEntity> findByProductUuidAndMemberUuidAndDeleted(String productUuid, String memberUuid,
-		boolean deleted);
-
 	Optional<CartEntity> findByProductUuidAndMemberUuid(String productUuid, String memberUuid);
 
 	List<CartEntity> findByMemberUuidAndDeletedFalse(String memberUuid);

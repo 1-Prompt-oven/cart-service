@@ -6,10 +6,12 @@ import java.util.Optional;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import com.promptove.cartservice.application.port.dto.CartDto;
 import com.promptove.cartservice.adapter.out.mysql.entity.CartEntity;
 import com.promptove.cartservice.adapter.out.mysql.mapper.CartEntityMapper;
+import com.promptove.cartservice.application.mapper.CartDtoMapper;
+import com.promptove.cartservice.application.port.in.CartRequestDto;
 import com.promptove.cartservice.application.port.out.CartRepositoryPort;
+import com.promptove.cartservice.application.port.out.CartTransactionDto;
 import com.promptove.cartservice.domain.model.Cart;
 
 import lombok.RequiredArgsConstructor;
@@ -22,33 +24,24 @@ public class CartRepositoryImpl implements CartRepositoryPort {
 
 	private final CartJpaRepository cartJpaRepository;
 	private final CartEntityMapper cartEntityMapper;
+	private final CartDtoMapper cartDtoMapper;
 
 	@Override
-	public Optional<Cart> getCartByProductUuidAndMemberUuid(String productUuid, String memberUuid) {
-		boolean deleted = true;
-		CartEntity cartEntity = cartJpaRepository.findByProductUuidAndMemberUuidAndDeleted(productUuid, memberUuid,
-			deleted).orElse(null);
+	public Optional<CartRequestDto> getCartByProductUuidAndMemberUuid(Cart cart) {
+		// boolean deleted = true;
+		// CartEntity cartEntity = cartJpaRepository.findByProductUuidAndMemberUuidAndDeleted(productUuid, memberUuid,
+		// 	deleted).orElse(null);
 
-		return Optional.ofNullable(cartEntityMapper.toDomain(cartEntity));
+		CartEntity cartEntity = cartJpaRepository.findByProductUuidAndMemberUuid(cart.getProductUuid(),
+				cart.getMemberUuid())
+			.orElse(null);
+
+		return Optional.ofNullable(cartEntityMapper.EntityToDto(cartEntity));
 	}
 
 	@Override
-	public void save(CartDto cartDto) {
-		// 기존에 동일한 상품이 장바구니에 있는지 확인
-		Optional<CartEntity> existingCartEntity = cartJpaRepository.findByProductUuidAndMemberUuidAndDeleted(
-			cartDto.getProductUuid(), cartDto.getMemberUuid(), true);
-
-		// 예전에 담은 적이 없으면 새로 저장
-		if (existingCartEntity.isEmpty()) {
-			cartJpaRepository.save(cartEntityMapper.toEntity(cartDto));
-		} else {
-			// 장바구니에 상품이 이미 있고, 삭제된 상태라면 삭제 상태를 업데이트
-			CartEntity cartEntity = existingCartEntity.get();
-			if (cartEntity.isDeleted()) {
-				cartEntity.updateDeleted(false);
-				cartJpaRepository.save(cartEntity);
-			}
-		}
+	public void save(CartTransactionDto cartTransactionDto) {
+		cartJpaRepository.save(cartEntityMapper.toEntity(cartTransactionDto));
 	}
 
 	@Override
@@ -57,7 +50,7 @@ public class CartRepositoryImpl implements CartRepositoryPort {
 		List<CartEntity> cartEntities = cartJpaRepository.findByMemberUuidAndDeletedFalse(memberUuid);
 
 		return cartEntities.stream()
-			.map(cartEntityMapper::toDomain)
+			.map(cartEntityMapper::EntityToDomain)
 			.toList();  // 리스트로 변환
 	}
 

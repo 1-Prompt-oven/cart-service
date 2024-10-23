@@ -1,4 +1,4 @@
-package com.promptove.cartservice.adapter.in.rest;
+package com.promptove.cartservice.adapter.in.web.controller;
 
 import java.util.List;
 
@@ -9,14 +9,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.promptove.cartservice.adapter.in.mapper.CartVoMapper;
-import com.promptove.cartservice.adapter.in.rest.vo.CartDeleteRequestVo;
-import com.promptove.cartservice.adapter.in.rest.vo.CartRequestVo;
-import com.promptove.cartservice.adapter.in.rest.vo.CartResponseVo;
-import com.promptove.cartservice.adapter.in.rest.vo.CartUpdateVo;
+import com.promptove.cartservice.adapter.in.web.mapper.CartVoMapper;
+import com.promptove.cartservice.adapter.in.web.vo.CartDeleteRequestVo;
+import com.promptove.cartservice.adapter.in.web.vo.CartRequestVo;
+import com.promptove.cartservice.adapter.in.web.vo.CartResponseVo;
+import com.promptove.cartservice.adapter.in.web.vo.CartUpdateVo;
 import com.promptove.cartservice.application.port.in.CartUseCase;
 import com.promptove.cartservice.domain.model.Cart;
 import com.promptove.cartservice.global.common.response.BaseResponse;
@@ -45,7 +44,7 @@ public class CartRestController {
 
 	@Operation(summary = "장바구니 조회 API", tags = {"장바구니"})
 	@GetMapping
-	public ResponseEntity<List<CartResponseVo>> getCart(@RequestParam String memberUuid) {
+	public ResponseEntity<List<CartResponseVo>> getCart(@RequestBody String memberUuid) {
 		List<Cart> carts = cartUseCase.getCart(memberUuid);
 		return ResponseEntity.ok(carts.stream().map(cartVoMapper::toResponseVo).toList());
 	}

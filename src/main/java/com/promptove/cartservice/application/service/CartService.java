@@ -6,27 +6,31 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.promptove.cartservice.application.port.dto.CartDto;
+import com.promptove.cartservice.application.mapper.CartDtoMapper;
+import com.promptove.cartservice.application.port.in.CartRequestDto;
 import com.promptove.cartservice.application.port.in.CartUseCase;
 import com.promptove.cartservice.application.port.out.CartRepositoryPort;
 import com.promptove.cartservice.domain.model.Cart;
+import com.promptove.cartservice.domain.service.CartDomainService;
 
 @Service
 public class CartService implements CartUseCase {
 
 	private final CartRepositoryPort cartRepositoryPort;
+	private final CartDomainService cartDomainService;
+	private final CartDtoMapper cartDtoMapper;
 
 	public CartService(@Qualifier("cartMysqlAdapter") CartRepositoryPort cartRepositoryPort) {
 		this.cartRepositoryPort = cartRepositoryPort;
+		this.cartDomainService = new CartDomainService();
+		this.cartDtoMapper = new CartDtoMapper();
 	}
 
 	@Override
 	@Transactional
-	public void createCart(CartDto cartDto) {
+	public void createCart(CartRequestDto cartRequestDto) {
 
-		cartRepositoryPort.save(cartDto);
-
-		// cartRepositoryPort.getCartByProductUuidAndMemberUuid(cartDto);
+		cartRepositoryPort.save(cartDtoMapper.toDto(cartDomainService.createCart(cartRequestDto)));
 
 		// // 예전에 담은 적이 없으면
 		// if (cart == null) {
