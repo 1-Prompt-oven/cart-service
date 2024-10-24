@@ -1,9 +1,5 @@
 package com.promptove.cartservice.application.port.in;
 
-import java.util.List;
-
-import com.promptove.cartservice.domain.model.Cart;
-
 //input port
 public interface CartUseCase {
 
@@ -13,5 +9,5 @@ public interface CartUseCase {
 
 	void updateCartItem(CartRequestDto cartUpdateRequestDto);
 
-	// void deleteCartItem(String memberUuid, String productUuid);
+	void deleteCartItem(CartRequestDto cartDeleteRequestDto);
 }

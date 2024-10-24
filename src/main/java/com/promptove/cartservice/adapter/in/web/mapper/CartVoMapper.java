@@ -2,6 +2,7 @@ package com.promptove.cartservice.adapter.in.web.mapper;
 
 import org.springframework.stereotype.Component;
 
+import com.promptove.cartservice.adapter.in.web.vo.CartDeleteRequestVo;
 import com.promptove.cartservice.adapter.in.web.vo.CartRequestVo;
 import com.promptove.cartservice.adapter.in.web.vo.CartResponseVo;
 import com.promptove.cartservice.adapter.in.web.vo.CartUpdateVo;
@@ -26,6 +27,13 @@ public class CartVoMapper {
 			.memberUuid(cartUpdateVo.getMemberUuid())
 			.productUuid(cartUpdateVo.getProductUuid())
 			.selected(cartUpdateVo.isSelected())
+			.build();
+	}
+
+	public CartRequestDto toDeleteDto(CartDeleteRequestVo cartDeleteRequestVo) {
+		return CartRequestDto.builder()
+			.memberUuid(cartDeleteRequestVo.getMemberUuid())
+			.productUuid(cartDeleteRequestVo.getProductUuid())
 			.build();
 	}
 
