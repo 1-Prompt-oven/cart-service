@@ -1,17 +1,22 @@
 package com.promptove.cartservice.adapter.in.web.controller;
 
-import org.springframework.http.ResponseEntity;
+import java.util.List;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.promptove.cartservice.adapter.in.web.mapper.CartVoMapper;
+import com.promptove.cartservice.adapter.in.web.vo.CartCreateRequestVo;
 import com.promptove.cartservice.adapter.in.web.vo.CartDeleteRequestVo;
-import com.promptove.cartservice.adapter.in.web.vo.CartRequestVo;
+import com.promptove.cartservice.adapter.in.web.vo.CartResponseVo;
 import com.promptove.cartservice.adapter.in.web.vo.CartUpdateVo;
+import com.promptove.cartservice.application.port.in.CartRequestDto;
 import com.promptove.cartservice.application.port.in.CartUseCase;
 import com.promptove.cartservice.global.common.response.BaseResponse;
 import com.promptove.cartservice.global.common.response.BaseResponseStatus;
@@ -32,19 +37,27 @@ public class CartRestController {
 
 	@Operation(summary = "장바구니 생성 API", tags = {"장바구니"})
 	@PostMapping
-	public BaseResponse<Void> createCart(@RequestBody CartRequestVo cartRequestVo) {
+	public BaseResponse<Void> createCart(@RequestBody CartCreateRequestVo cartCreateRequestVo) {
 
-		cartUseCase.createCart(cartVoMapper.toDto(cartRequestVo));
+		cartUseCase.createCart(cartVoMapper.toDto(cartCreateRequestVo));
 
 		return new BaseResponse<>(BaseResponseStatus.SUCCESS);
 	}
 
 	// @Operation(summary = "장바구니 조회 API", tags = {"장바구니"})
 	// @GetMapping
-	// public ResponseEntity<List<CartResponseVo>> getCart(@RequestBody CartRequestVo cartRequestVo) {
-	// 	List<Cart> carts = cartUseCase.getCart(cartRequestVo);
-	// 	return ResponseEntity.ok(carts.stream().map(cartVoMapper::toResponseVo).toList());
+	// public BaseResponse<List<CartResponseVo>> getCart(@RequestBody CartGetRequestVo cartGetRequestVo) {
+	// 	List<CartRequestDto> cartRequestDtoList = cartUseCase.getCart(cartVoMapper.toGetDto(cartGetRequestVo));
+	// 	return new BaseResponse<>(BaseResponseStatus.SUCCESS, cartVoMapper.toVoList(cartRequestDtoList));
 	// }
+
+	@Operation(summary = "장바구니 조회 API", tags = {"장바구니"})
+	@GetMapping
+	public BaseResponse<List<CartResponseVo>> getCart(@RequestHeader("memberUuid") String memberUuid) {
+		List<CartRequestDto> cartRequestDtoList = cartUseCase.getCart(
+			cartVoMapper.toGetDto(memberUuid));
+		return new BaseResponse<>(BaseResponseStatus.SUCCESS, cartVoMapper.toVoList(cartRequestDtoList));
+	}
 
 	@Operation(summary = "장바구니 선택 상태 변경 API", tags = {"장바구니"})
 	@PutMapping()
@@ -57,10 +70,10 @@ public class CartRestController {
 
 	@Operation(summary = "장바구니 항목 삭제 API", tags = {"장바구니"})
 	@DeleteMapping()
-	public ResponseEntity<String> deleteCartItem(@RequestBody CartDeleteRequestVo cartDeleteRequestVo) {
+	public BaseResponse<Void> deleteCartItem(@RequestBody CartDeleteRequestVo cartDeleteRequestVo) {
 
 		cartUseCase.deleteCartItem(cartVoMapper.toDeleteDto(cartDeleteRequestVo));
 
-		return ResponseEntity.ok("장바구니 항목 삭제 성공");
+		return new BaseResponse<>(BaseResponseStatus.SUCCESS);
 	}
 }

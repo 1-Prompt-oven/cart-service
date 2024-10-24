@@ -3,7 +3,7 @@ package com.promptove.cartservice.adapter.out.mysql.mapper;
 import org.springframework.stereotype.Component;
 
 import com.promptove.cartservice.adapter.out.mysql.entity.CartEntity;
-import com.promptove.cartservice.application.port.out.CartTransactionDto;
+import com.promptove.cartservice.application.port.out.CartOutportDto;
 import com.promptove.cartservice.domain.model.Cart;
 
 import lombok.extern.slf4j.Slf4j;
@@ -12,44 +12,44 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class CartEntityMapper {
 
-	public CartEntity toEntity(CartTransactionDto cartTransactionDto) {
+	public CartEntity toEntity(CartOutportDto cartOutportDto) {
 		return CartEntity.builder()
-			.memberUuid(cartTransactionDto.getMemberUuid())
-			.productUuid(cartTransactionDto.getProductUuid())
-			.selected(cartTransactionDto.isSelected())
-			.deleted(cartTransactionDto.isDeleted())
-			.createdAt(cartTransactionDto.getCreatedAt())
+			.memberUuid(cartOutportDto.getMemberUuid())
+			.productUuid(cartOutportDto.getProductUuid())
+			.selected(cartOutportDto.isSelected())
+			.deleted(cartOutportDto.isDeleted())
+			.createdAt(cartOutportDto.getCreatedAt())
 			.build();
 	}
 
-	public CartEntity toUpdateEntity(CartTransactionDto cartTransactionDto) {
+	public CartEntity toUpdateEntity(CartOutportDto cartOutportDto) {
 
-		log.info("cartTransactionDto: {}", cartTransactionDto.toString());
+		log.info("cartTransactionDto: {}", cartOutportDto.toString());
 
 		return CartEntity.builder()
-			.id(cartTransactionDto.getId())
-			.memberUuid(cartTransactionDto.getMemberUuid())
-			.productUuid(cartTransactionDto.getProductUuid())
-			.selected(cartTransactionDto.isSelected())
-			.deleted(cartTransactionDto.isDeleted())
-			.createdAt(cartTransactionDto.getCreatedAt())
+			.id(cartOutportDto.getId())
+			.memberUuid(cartOutportDto.getMemberUuid())
+			.productUuid(cartOutportDto.getProductUuid())
+			.selected(cartOutportDto.isSelected())
+			.deleted(cartOutportDto.isDeleted())
+			.createdAt(cartOutportDto.getCreatedAt())
 			.build();
 	}
 
-	public CartEntity toDeleteEntity(CartTransactionDto cartTransactionDto) {
+	public CartEntity toDeleteEntity(CartOutportDto cartOutportDto) {
 
 		return CartEntity.builder()
-			.id(cartTransactionDto.getId())
-			.memberUuid(cartTransactionDto.getMemberUuid())
-			.productUuid(cartTransactionDto.getProductUuid())
-			.selected(cartTransactionDto.isSelected())
-			.deleted(cartTransactionDto.isDeleted())
-			.createdAt(cartTransactionDto.getCreatedAt())
+			.id(cartOutportDto.getId())
+			.memberUuid(cartOutportDto.getMemberUuid())
+			.productUuid(cartOutportDto.getProductUuid())
+			.selected(cartOutportDto.isSelected())
+			.deleted(cartOutportDto.isDeleted())
+			.createdAt(cartOutportDto.getCreatedAt())
 			.build();
 	}
 
-	public CartTransactionDto toDto(CartEntity cartEntity) {
-		return CartTransactionDto.builder()
+	public CartOutportDto toDto(CartEntity cartEntity) {
+		return CartOutportDto.builder()
 			.id(cartEntity.getId())
 			.memberUuid(cartEntity.getMemberUuid())
 			.productUuid(cartEntity.getProductUuid())

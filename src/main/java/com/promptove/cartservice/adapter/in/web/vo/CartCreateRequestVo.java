@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class CartRequestVo {
+public class CartCreateRequestVo {
 	private String memberUuid;
 	private String productUuid;
 	private LocalDateTime createdAt;
