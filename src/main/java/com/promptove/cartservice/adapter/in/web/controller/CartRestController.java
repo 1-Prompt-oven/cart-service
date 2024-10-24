@@ -38,30 +38,32 @@ public class CartRestController {
 	@Operation(summary = "장바구니 생성 API", tags = {"장바구니"})
 	@PostMapping
 	public BaseResponse<Void> createCart(@RequestBody CartRequestVo cartRequestVo) {
+
 		cartUseCase.createCart(cartVoMapper.toDto(cartRequestVo));
+
 		return new BaseResponse<>(BaseResponseStatus.SUCCESS);
 	}
 
-	@Operation(summary = "장바구니 조회 API", tags = {"장바구니"})
-	@GetMapping
-	public ResponseEntity<List<CartResponseVo>> getCart(@RequestBody String memberUuid) {
-		List<Cart> carts = cartUseCase.getCart(memberUuid);
-		return ResponseEntity.ok(carts.stream().map(cartVoMapper::toResponseVo).toList());
-	}
+	// @Operation(summary = "장바구니 조회 API", tags = {"장바구니"})
+	// @GetMapping
+	// public ResponseEntity<List<CartResponseVo>> getCart(@RequestBody CartRequestVo cartRequestVo) {
+	// 	List<Cart> carts = cartUseCase.getCart(cartRequestVo);
+	// 	return ResponseEntity.ok(carts.stream().map(cartVoMapper::toResponseVo).toList());
+	// }
 
 	@Operation(summary = "장바구니 선택 상태 변경 API", tags = {"장바구니"})
 	@PutMapping()
-	public ResponseEntity<String> updateCartItem(@RequestBody CartUpdateVo cartUpdateVo) {
+	public BaseResponse<Void> updateCartItem(@RequestBody CartUpdateVo cartUpdateVo) {
 
-		cartUseCase.updateCartItem(cartUpdateVo.getMemberUuid(), cartUpdateVo.getProductUuid(),
-			cartUpdateVo.isSelected());
-		return ResponseEntity.ok("장바구니 선택 상태 변경 성공");
+		cartUseCase.updateCartItem(cartVoMapper.toUpdateDto(cartUpdateVo));
+
+		return new BaseResponse<>(BaseResponseStatus.SUCCESS);
 	}
 
-	@Operation(summary = "장바구니 항목 삭제 API", tags = {"장바구니"})
-	@DeleteMapping()
-	public ResponseEntity<String> deleteCartItem(@RequestBody CartDeleteRequestVo cartDeleteRequestVo) {
-		cartUseCase.deleteCartItem(cartDeleteRequestVo.getMemberUuid(), cartDeleteRequestVo.getProductUuid());
-		return ResponseEntity.ok("장바구니 항목 삭제 성공");
-	}
+	// @Operation(summary = "장바구니 항목 삭제 API", tags = {"장바구니"})
+	// @DeleteMapping()
+	// public ResponseEntity<String> deleteCartItem(@RequestBody CartDeleteRequestVo cartDeleteRequestVo) {
+	// 	cartUseCase.deleteCartItem(cartDeleteRequestVo.getMemberUuid(), cartDeleteRequestVo.getProductUuid());
+	// 	return ResponseEntity.ok("장바구니 항목 삭제 성공");
+	// }
 }

@@ -7,17 +7,11 @@ import com.promptove.cartservice.domain.model.Cart;
 //input port
 public interface CartUseCase {
 
-	void createCart(CartRequestDto cartRequestDto);
+	void createCart(CartRequestDto cartCreateRequestDto);
 
-	List<Cart> getCart(String memberUuid);
+	// List<Cart> getCart(CartRequestDto cartRequestDto);
 
-	void updateCartItem(String memberUuid, String productUuid, boolean isSelected);
+	void updateCartItem(CartRequestDto cartUpdateRequestDto);
 
-	void deleteCartItem(String memberUuid, String productUuid);
-
-	// 제품 삭제 시 장바구니에서 항목 삭제
-	void deleteCartItemByProductUuid(String productUuid);
-
-	// 결제 성공 후 장바구니 비우기
-	void clearCartAfterOrder(String memberUuid);
+	// void deleteCartItem(String memberUuid, String productUuid);
 }

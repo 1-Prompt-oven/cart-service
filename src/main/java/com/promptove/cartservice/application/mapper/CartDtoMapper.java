@@ -33,6 +33,7 @@ public class CartDtoMapper {
 
 	public CartTransactionDto toDto(Cart cart) {
 		return CartTransactionDto.builder()
+			.id(cart.getId())
 			.memberUuid(cart.getMemberUuid())
 			.productUuid(cart.getProductUuid())
 			.selected(cart.isSelected())

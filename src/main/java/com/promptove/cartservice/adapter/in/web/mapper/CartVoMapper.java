@@ -6,7 +6,6 @@ import com.promptove.cartservice.adapter.in.web.vo.CartRequestVo;
 import com.promptove.cartservice.adapter.in.web.vo.CartResponseVo;
 import com.promptove.cartservice.adapter.in.web.vo.CartUpdateVo;
 import com.promptove.cartservice.application.port.in.CartRequestDto;
-import com.promptove.cartservice.application.port.dto.CartUpdateDto;
 import com.promptove.cartservice.domain.model.Cart;
 
 @Component
@@ -22,8 +21,8 @@ public class CartVoMapper {
 			.build();
 	}
 
-	public CartUpdateDto toDto(CartUpdateVo cartUpdateVo) {
-		return CartUpdateDto.builder()
+	public CartRequestDto toUpdateDto(CartUpdateVo cartUpdateVo) {
+		return CartRequestDto.builder()
 			.memberUuid(cartUpdateVo.getMemberUuid())
 			.productUuid(cartUpdateVo.getProductUuid())
 			.selected(cartUpdateVo.isSelected())
@@ -32,7 +31,7 @@ public class CartVoMapper {
 
 	public CartResponseVo toResponseVo(Cart cart) {
 		return CartResponseVo.builder()
-			.cartId(cart.getCartId())
+			.cartId(cart.getId())
 			.memberUuid(cart.getMemberUuid())
 			.productUuid(cart.getProductUuid())
 			.selected(cart.isSelected())

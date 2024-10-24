@@ -7,6 +7,9 @@ import com.promptove.cartservice.application.port.in.CartRequestDto;
 import com.promptove.cartservice.application.port.out.CartTransactionDto;
 import com.promptove.cartservice.domain.model.Cart;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
 public class CartEntityMapper {
 
@@ -17,6 +20,31 @@ public class CartEntityMapper {
 			.selected(cartTransactionDto.isSelected())
 			.deleted(cartTransactionDto.isDeleted())
 			.createdAt(cartTransactionDto.getCreatedAt())
+			.build();
+	}
+
+	public CartEntity toUpdateEntity(CartTransactionDto cartTransactionDto) {
+
+		log.info("cartTransactionDto: {}", cartTransactionDto.toString());
+
+		return CartEntity.builder()
+			.id(cartTransactionDto.getId())
+			.memberUuid(cartTransactionDto.getMemberUuid())
+			.productUuid(cartTransactionDto.getProductUuid())
+			.selected(cartTransactionDto.isSelected())
+			.deleted(cartTransactionDto.isDeleted())
+			.createdAt(cartTransactionDto.getCreatedAt())
+			.build();
+	}
+
+	public CartTransactionDto toDto(CartEntity cartEntity) {
+		return CartTransactionDto.builder()
+			.id(cartEntity.getId())
+			.memberUuid(cartEntity.getMemberUuid())
+			.productUuid(cartEntity.getProductUuid())
+			.selected(cartEntity.isSelected())
+			.deleted(cartEntity.isDeleted())
+			.createdAt(cartEntity.getCreatedAt())
 			.build();
 	}
 

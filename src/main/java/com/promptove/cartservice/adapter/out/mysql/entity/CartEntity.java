@@ -26,8 +26,9 @@ public class CartEntity {
 	private LocalDateTime createdAt;
 
 	@Builder
-	public CartEntity(String memberUuid, String productUuid, boolean selected, boolean deleted,
+	public CartEntity(Long id, String memberUuid, String productUuid, boolean selected, boolean deleted,
 		LocalDateTime createdAt) {
+		this.id = id;
 		this.memberUuid = memberUuid;
 		this.productUuid = productUuid;
 		this.selected = selected;
