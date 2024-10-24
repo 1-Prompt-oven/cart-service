@@ -18,13 +18,23 @@ public class CartDomainService {
 			.build();
 	}
 
-	public Cart updateReview(CartTransactionDto cartTransactionDto, CartRequestDto cartRequestDto) {
+	public Cart updateCart(CartTransactionDto cartTransactionDto, CartRequestDto cartRequestDto) {
 		return Cart.builder()
 			.id(cartTransactionDto.getId())
 			.memberUuid(cartTransactionDto.getMemberUuid())
 			.productUuid(cartTransactionDto.getProductUuid())
 			.selected(cartRequestDto.isSelected())
-			.deleted(false)
+			.deleted(cartTransactionDto.isDeleted())
+			.build();
+	}
+
+	public Cart deleteCart(CartTransactionDto cartTransactionDto, CartRequestDto cartRequestDto) {
+		return Cart.builder()
+			.id(cartTransactionDto.getId())
+			.memberUuid(cartTransactionDto.getMemberUuid())
+			.productUuid(cartTransactionDto.getProductUuid())
+			.selected(cartTransactionDto.isSelected())
+			.deleted(true)
 			.build();
 	}
 }

@@ -58,18 +58,28 @@ public class CartService implements CartUseCase {
 		CartTransactionDto cartTransactionDto = cartRepositoryPort.getCartByProductUuidAndMemberUuid(
 			cartUpdateRequestDto.getMemberUuid(), cartUpdateRequestDto.getProductUuid()).orElse(null);
 
-		if (cartTransactionDto == null) {
+		// 장바구니에 없거나 Soft Delete 된 경우
+		if (cartTransactionDto == null || cartTransactionDto.isDeleted()) {
 			throw new IllegalArgumentException("해당 제품이 장바구니에 없습니다.");
 		} else {
-			Cart cart = cartDomainService.updateReview(cartTransactionDto, cartUpdateRequestDto);
+			Cart cart = cartDomainService.updateCart(cartTransactionDto, cartUpdateRequestDto);
 			cartRepositoryPort.updateCartItem(cartDtoMapper.toDto(cart));
 		}
 	}
 
-	// @Transactional
-	// @Override
-	// public void deleteCartItem(String memberUuid, String productUuid) {
-	// 	cartRepositoryPort.deleteCartItem(memberUuid, productUuid);
-	// }
+	@Transactional
+	@Override
+	public void deleteCartItem(CartRequestDto cartDeleteRequestDto) {
+
+		CartTransactionDto cartTransactionDto = cartRepositoryPort.getCartByProductUuidAndMemberUuid(
+			cartDeleteRequestDto.getMemberUuid(), cartDeleteRequestDto.getProductUuid()).orElse(null);
+
+		if (cartTransactionDto == null) {
+			throw new IllegalArgumentException("해당 제품이 장바구니에 없습니다.");
+		} else {
+			Cart cart = cartDomainService.deleteCart(cartTransactionDto, cartDeleteRequestDto);
+			cartRepositoryPort.deleteCartItem(cartDtoMapper.toDto(cart));
+		}
+	}
 }
 

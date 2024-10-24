@@ -33,6 +33,7 @@ public class CartRepositoryImpl implements CartRepositoryPort {
 
 	@Override
 	public void save(CartTransactionDto cartTransactionDto) {
+
 		cartJpaRepository.save(cartEntityMapper.toEntity(cartTransactionDto));
 	}
 
@@ -49,14 +50,13 @@ public class CartRepositoryImpl implements CartRepositoryPort {
 
 	@Override
 	public void updateCartItem(CartTransactionDto cartTransactionDto) {
+
 		cartJpaRepository.save(cartEntityMapper.toUpdateEntity(cartTransactionDto));
 	}
 
-	// @Override
-	// public void deleteCartItem(String memberUuid, String productUuid) {
-	// 	CartEntity cartEntity = cartJpaRepository.findByProductUuidAndMemberUuid(productUuid, memberUuid)
-	// 		.orElseThrow(() -> new IllegalArgumentException("해당 제품이 장바구니에 없습니다."));
-	// 	cartEntity.setDeleted(true);
-	// 	cartJpaRepository.save(cartEntity);
-	// }
+	@Override
+	public void deleteCartItem(CartTransactionDto cartTransactionDto) {
+
+		cartJpaRepository.save(cartEntityMapper.toDeleteEntity(cartTransactionDto));
+	}
 }

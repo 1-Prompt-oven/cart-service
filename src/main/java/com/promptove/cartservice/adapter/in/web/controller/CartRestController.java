@@ -1,10 +1,7 @@
 package com.promptove.cartservice.adapter.in.web.controller;
 
-import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,10 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.promptove.cartservice.adapter.in.web.mapper.CartVoMapper;
 import com.promptove.cartservice.adapter.in.web.vo.CartDeleteRequestVo;
 import com.promptove.cartservice.adapter.in.web.vo.CartRequestVo;
-import com.promptove.cartservice.adapter.in.web.vo.CartResponseVo;
 import com.promptove.cartservice.adapter.in.web.vo.CartUpdateVo;
 import com.promptove.cartservice.application.port.in.CartUseCase;
-import com.promptove.cartservice.domain.model.Cart;
 import com.promptove.cartservice.global.common.response.BaseResponse;
 import com.promptove.cartservice.global.common.response.BaseResponseStatus;
 
@@ -60,10 +55,12 @@ public class CartRestController {
 		return new BaseResponse<>(BaseResponseStatus.SUCCESS);
 	}
 
-	// @Operation(summary = "장바구니 항목 삭제 API", tags = {"장바구니"})
-	// @DeleteMapping()
-	// public ResponseEntity<String> deleteCartItem(@RequestBody CartDeleteRequestVo cartDeleteRequestVo) {
-	// 	cartUseCase.deleteCartItem(cartDeleteRequestVo.getMemberUuid(), cartDeleteRequestVo.getProductUuid());
-	// 	return ResponseEntity.ok("장바구니 항목 삭제 성공");
-	// }
+	@Operation(summary = "장바구니 항목 삭제 API", tags = {"장바구니"})
+	@DeleteMapping()
+	public ResponseEntity<String> deleteCartItem(@RequestBody CartDeleteRequestVo cartDeleteRequestVo) {
+
+		cartUseCase.deleteCartItem(cartVoMapper.toDeleteDto(cartDeleteRequestVo));
+
+		return ResponseEntity.ok("장바구니 항목 삭제 성공");
+	}
 }
