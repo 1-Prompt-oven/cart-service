@@ -1,16 +1,17 @@
-package com.promptove.cartservice.domain;
+package com.promptove.cartservice.domain.model;
 
 import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-@AllArgsConstructor
+@NoArgsConstructor
 public class Cart {
 
-	private Long cartId;
+	private Long id;
 	private String memberUuid;
 	private String productUuid;
 	private boolean selected;
@@ -18,7 +19,8 @@ public class Cart {
 	private LocalDateTime createdAt;
 
 	@Builder
-	public Cart(String memberUuid, String productUuid, boolean selected, boolean deleted, LocalDateTime createdAt) {
+	public Cart(Long id, String memberUuid, String productUuid, boolean selected, boolean deleted, LocalDateTime createdAt) {
+		this.id = id;
 		this.memberUuid = memberUuid;
 		this.productUuid = productUuid;
 		this.selected = selected;
@@ -44,5 +46,4 @@ public class Cart {
 			.createdAt(createdAt)
 			.build();
 	}
-
 }

@@ -6,15 +6,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Data
+@Getter
 @Entity
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
 public class CartEntity {
 
@@ -27,4 +24,23 @@ public class CartEntity {
 	private boolean selected;
 	private boolean deleted;
 	private LocalDateTime createdAt;
+
+	@Builder
+	public CartEntity(Long id, String memberUuid, String productUuid, boolean selected, boolean deleted,
+		LocalDateTime createdAt) {
+		this.id = id;
+		this.memberUuid = memberUuid;
+		this.productUuid = productUuid;
+		this.selected = selected;
+		this.deleted = deleted;
+		this.createdAt = createdAt;
+	}
+
+	public void updateSelected(boolean selected) {
+		this.selected = selected;
+	}
+
+	public void updateDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
 }
