@@ -6,12 +6,9 @@ import java.util.Optional;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import com.promptove.cartservice.adapter.out.mysql.entity.CartEntity;
 import com.promptove.cartservice.adapter.out.mysql.mapper.CartEntityMapper;
-import com.promptove.cartservice.application.mapper.CartDtoMapper;
+import com.promptove.cartservice.application.port.out.CartOutportDto;
 import com.promptove.cartservice.application.port.out.CartRepositoryPort;
-import com.promptove.cartservice.application.port.out.CartTransactionDto;
-import com.promptove.cartservice.domain.model.Cart;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,40 +20,35 @@ public class CartRepositoryImpl implements CartRepositoryPort {
 
 	private final CartJpaRepository cartJpaRepository;
 	private final CartEntityMapper cartEntityMapper;
-	private final CartDtoMapper cartDtoMapper;
 
 	@Override
-	public Optional<CartTransactionDto> getCartByProductUuidAndMemberUuid(String productUuid, String memberUuid) {
+	public Optional<CartOutportDto> getCartByProductUuidAndMemberUuid(String productUuid, String memberUuid) {
 
 		return cartJpaRepository.findByProductUuidAndMemberUuid(productUuid, memberUuid).map(cartEntityMapper::toDto);
 	}
 
 	@Override
-	public void save(CartTransactionDto cartTransactionDto) {
-		cartJpaRepository.save(cartEntityMapper.toEntity(cartTransactionDto));
+	public void save(CartOutportDto cartOutportDto) {
+
+		cartJpaRepository.save(cartEntityMapper.toEntity(cartOutportDto));
 	}
 
 	@Override
-	public List<Cart> getCart(CartTransactionDto cartTransactionDto) {
+	public List<CartOutportDto> getCart(CartOutportDto cartOutportDto) {
 
-		List<CartEntity> cartEntities = cartJpaRepository.findByMemberUuidAndDeletedFalse(
-			cartTransactionDto.getMemberUuid());
-
-		return cartEntities.stream()
-			.map(cartEntityMapper::EntityToDomain)
-			.toList();  // 리스트로 변환
+		return cartJpaRepository.findByMemberUuidAndDeletedFalse(cartOutportDto.getMemberUuid()).stream()
+			.map(cartEntityMapper::toDto).toList();
 	}
 
 	@Override
-	public void updateCartItem(CartTransactionDto cartTransactionDto) {
-		cartJpaRepository.save(cartEntityMapper.toUpdateEntity(cartTransactionDto));
+	public void updateCartItem(CartOutportDto cartOutportDto) {
+
+		cartJpaRepository.save(cartEntityMapper.toUpdateEntity(cartOutportDto));
 	}
 
-	// @Override
-	// public void deleteCartItem(String memberUuid, String productUuid) {
-	// 	CartEntity cartEntity = cartJpaRepository.findByProductUuidAndMemberUuid(productUuid, memberUuid)
-	// 		.orElseThrow(() -> new IllegalArgumentException("해당 제품이 장바구니에 없습니다."));
-	// 	cartEntity.setDeleted(true);
-	// 	cartJpaRepository.save(cartEntity);
-	// }
+	@Override
+	public void deleteCartItem(CartOutportDto cartOutportDto) {
+
+		cartJpaRepository.save(cartEntityMapper.toDeleteEntity(cartOutportDto));
+	}
 }

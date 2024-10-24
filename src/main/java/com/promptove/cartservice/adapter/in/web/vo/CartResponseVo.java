@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CartResponseVo {
-	private Long cartId;
+	private Long id;
 	private String memberUuid;
 	private String productUuid;
 	private boolean selected;

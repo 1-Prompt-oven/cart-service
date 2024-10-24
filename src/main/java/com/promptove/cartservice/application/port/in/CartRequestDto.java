@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CartRequestDto {
 	//여러가지 컬럼이 다 들어감
+	private Long id;
 	private String memberUuid;
 	private String productUuid;
 	private boolean selected;
@@ -17,7 +18,8 @@ public class CartRequestDto {
 	private LocalDateTime createdAt;
 
 	@Builder
-	public CartRequestDto(String memberUuid, String productUuid, boolean selected, boolean deleted, LocalDateTime createdAt) {
+	public CartRequestDto(Long id, String memberUuid, String productUuid, boolean selected, boolean deleted, LocalDateTime createdAt) {
+		this.id = id;
 		this.memberUuid = memberUuid;
 		this.productUuid = productUuid;
 		this.selected = selected;

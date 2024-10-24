@@ -10,7 +10,7 @@ import lombok.ToString;
 @Getter
 @NoArgsConstructor
 @ToString
-public class CartTransactionDto {
+public class CartOutportDto {
 
 	//여러가지 컬럼이 다 들어감
 	private Long id;
@@ -21,7 +21,7 @@ public class CartTransactionDto {
 	private LocalDateTime createdAt;
 
 	@Builder
-	public CartTransactionDto(Long id, String memberUuid, String productUuid, boolean selected, boolean deleted,
+	public CartOutportDto(Long id, String memberUuid, String productUuid, boolean selected, boolean deleted,
 		LocalDateTime createdAt) {
 		this.id = id;
 		this.memberUuid = memberUuid;

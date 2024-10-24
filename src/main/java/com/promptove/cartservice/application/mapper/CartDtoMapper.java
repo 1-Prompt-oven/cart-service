@@ -1,16 +1,17 @@
 package com.promptove.cartservice.application.mapper;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import com.promptove.cartservice.application.port.in.CartRequestDto;
-import com.promptove.cartservice.application.port.out.CartTransactionDto;
+import com.promptove.cartservice.application.port.out.CartOutportDto;
 import com.promptove.cartservice.domain.model.Cart;
 
 @Component
 public class CartDtoMapper {
 
-	// DTO를 도메인으로
-	public Cart DtoToDomain(CartRequestDto cartRequestDto) {
+	public Cart toDomain(CartRequestDto cartRequestDto) {
 		return Cart.builder()
 			.memberUuid(cartRequestDto.getMemberUuid())
 			.productUuid(cartRequestDto.getProductUuid())
@@ -20,9 +21,9 @@ public class CartDtoMapper {
 			.build();
 	}
 
-	// 도메인을 DTO로
-	public CartRequestDto DomainToDto(Cart cart) {
-		return CartRequestDto.builder()
+	public CartOutportDto toDto(Cart cart) {
+		return CartOutportDto.builder()
+			.id(cart.getId())
 			.memberUuid(cart.getMemberUuid())
 			.productUuid(cart.getProductUuid())
 			.selected(cart.isSelected())
@@ -31,14 +32,14 @@ public class CartDtoMapper {
 			.build();
 	}
 
-	public CartTransactionDto toDto(Cart cart) {
-		return CartTransactionDto.builder()
+	public List<CartRequestDto> toDtoList(List<Cart> cartList) {
+		return cartList.stream().map(cart -> CartRequestDto.builder()
 			.id(cart.getId())
 			.memberUuid(cart.getMemberUuid())
 			.productUuid(cart.getProductUuid())
 			.selected(cart.isSelected())
 			.deleted(cart.isDeleted())
 			.createdAt(cart.getCreatedAt())
-			.build();
+			.build()).toList();
 	}
 }
