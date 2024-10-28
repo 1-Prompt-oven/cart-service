@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.promptove.cartservice.adapter.in.web.vo.CartCreateRequestVo;
 import com.promptove.cartservice.adapter.in.web.vo.CartDeleteRequestVo;
+import com.promptove.cartservice.adapter.in.web.vo.CartGetRequestVo;
 import com.promptove.cartservice.adapter.in.web.vo.CartResponseVo;
 import com.promptove.cartservice.adapter.in.web.vo.CartUpdateVo;
 import com.promptove.cartservice.application.port.in.CartRequestDto;
@@ -23,17 +24,16 @@ public class CartVoMapper {
 			.build();
 	}
 
-	// public CartRequestDto toGetDto(CartGetRequestVo cartGetRequestVo) {
-	// 	return CartRequestDto.builder()
-	// 		.memberUuid(cartGetRequestVo.getMemberUuid())
-	// 		.productUuid(cartGetRequestVo.getProductUuid())
-	// 		.build();
-	// }
-	public CartRequestDto toGetDto(String memberUuid) {
+	public CartRequestDto toGetDto(CartGetRequestVo cartGetRequestVo) {
 		return CartRequestDto.builder()
-			.memberUuid(memberUuid)
+			.memberUuid(cartGetRequestVo.getMemberUuid())
 			.build();
 	}
+	// public CartRequestDto toGetDto(String memberUuid) {
+	// 	return CartRequestDto.builder()
+	// 		.memberUuid(memberUuid)
+	// 		.build();
+	// }
 
 	public List<CartResponseVo> toVoList(List<CartRequestDto> cartRequestDtoList) {
 		return cartRequestDtoList.stream().map(cartRequestDto -> CartResponseVo.builder()

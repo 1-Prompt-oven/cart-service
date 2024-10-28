@@ -3,17 +3,16 @@ package com.promptove.cartservice.adapter.in.web.controller;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.promptove.cartservice.adapter.in.web.mapper.CartVoMapper;
 import com.promptove.cartservice.adapter.in.web.vo.CartCreateRequestVo;
 import com.promptove.cartservice.adapter.in.web.vo.CartDeleteRequestVo;
+import com.promptove.cartservice.adapter.in.web.vo.CartGetRequestVo;
 import com.promptove.cartservice.adapter.in.web.vo.CartResponseVo;
 import com.promptove.cartservice.adapter.in.web.vo.CartUpdateVo;
 import com.promptove.cartservice.application.port.in.CartRequestDto;
@@ -44,20 +43,20 @@ public class CartRestController {
 		return new BaseResponse<>(BaseResponseStatus.SUCCESS);
 	}
 
-	// @Operation(summary = "장바구니 조회 API", tags = {"장바구니"})
-	// @GetMapping
-	// public BaseResponse<List<CartResponseVo>> getCart(@RequestBody CartGetRequestVo cartGetRequestVo) {
-	// 	List<CartRequestDto> cartRequestDtoList = cartUseCase.getCart(cartVoMapper.toGetDto(cartGetRequestVo));
-	// 	return new BaseResponse<>(BaseResponseStatus.SUCCESS, cartVoMapper.toVoList(cartRequestDtoList));
-	// }
-
 	@Operation(summary = "장바구니 조회 API", tags = {"장바구니"})
-	@GetMapping
-	public BaseResponse<List<CartResponseVo>> getCart(@RequestHeader("memberUuid") String memberUuid) {
-		List<CartRequestDto> cartRequestDtoList = cartUseCase.getCart(
-			cartVoMapper.toGetDto(memberUuid));
+	@PostMapping("/list")
+	public BaseResponse<List<CartResponseVo>> getCart(@RequestBody CartGetRequestVo cartGetRequestVo) {
+		List<CartRequestDto> cartRequestDtoList = cartUseCase.getCart(cartVoMapper.toGetDto(cartGetRequestVo));
 		return new BaseResponse<>(BaseResponseStatus.SUCCESS, cartVoMapper.toVoList(cartRequestDtoList));
 	}
+
+	// @Operation(summary = "장바구니 조회 API", tags = {"장바구니"})
+	// @GetMapping
+	// public BaseResponse<List<CartResponseVo>> getCart(@RequestHeader("memberUuid") String memberUuid) {
+	// 	List<CartRequestDto> cartRequestDtoList = cartUseCase.getCart(
+	// 		cartVoMapper.toGetDto(memberUuid));
+	// 	return new BaseResponse<>(BaseResponseStatus.SUCCESS, cartVoMapper.toVoList(cartRequestDtoList));
+	// }
 
 	@Operation(summary = "장바구니 선택 상태 변경 API", tags = {"장바구니"})
 	@PutMapping()

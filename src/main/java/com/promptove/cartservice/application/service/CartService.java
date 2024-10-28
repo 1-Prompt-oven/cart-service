@@ -36,20 +36,27 @@ public class CartService implements CartUseCase {
 
 		// 예전에 담은적이 없으면
 		if (cartOutportDto == null) {
-			cartRepositoryPort.save(cartDtoMapper.toDto(cartDomainService.createCart(cartCreateRequestDto)));
+
+			Cart cart = cartDomainService.createCart(cartCreateRequestDto);
+
+			cartRepositoryPort.save(cartDtoMapper.toDto(cart));
 		} else {
 			// 예전에 담은적이 있고 삭제 된 상태면
 			if (cartOutportDto.isDeleted()) {
-				cartRepositoryPort.updateCartItem(
-					cartDtoMapper.toDto(cartDomainService.updateExistCart(cartOutportDto)));
+
+				Cart cart = cartDomainService.updateExistCart(cartOutportDto);
+
+				cartRepositoryPort.updateCartItem(cartDtoMapper.toDto(cart));
 			}
 		}
 	}
 
 	@Override
 	public List<CartRequestDto> getCart(CartRequestDto cartGetRequestDto) {
-		List<CartOutportDto> cartOutportDtoList = cartRepositoryPort.getCart(
-			cartDtoMapper.toDto(cartDtoMapper.toDomain(cartGetRequestDto)));
+
+		Cart cart = cartDtoMapper.toDomain(cartGetRequestDto);
+
+		List<CartOutportDto> cartOutportDtoList = cartRepositoryPort.getCart(cartDtoMapper.toDto(cart));
 
 		List<Cart> cartList = cartDomainService.getCart(cartOutportDtoList);
 
@@ -68,6 +75,7 @@ public class CartService implements CartUseCase {
 			throw new IllegalArgumentException("해당 제품이 장바구니에 없습니다.");
 		} else {
 			Cart cart = cartDomainService.updateCart(cartOutportDto, cartUpdateRequestDto);
+
 			cartRepositoryPort.updateCartItem(cartDtoMapper.toDto(cart));
 		}
 	}
@@ -83,6 +91,7 @@ public class CartService implements CartUseCase {
 			throw new IllegalArgumentException("해당 제품이 장바구니에 없습니다.");
 		} else {
 			Cart cart = cartDomainService.deleteCart(cartOutportDto, cartDeleteRequestDto);
+			
 			cartRepositoryPort.deleteCartItem(cartDtoMapper.toDto(cart));
 		}
 	}
