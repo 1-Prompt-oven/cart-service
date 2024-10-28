@@ -13,6 +13,8 @@ import com.promptove.cartservice.application.port.out.CartOutportDto;
 import com.promptove.cartservice.application.port.out.CartRepositoryPort;
 import com.promptove.cartservice.domain.model.Cart;
 import com.promptove.cartservice.domain.service.CartDomainService;
+import com.promptove.cartservice.global.common.response.BaseResponseStatus;
+import com.promptove.cartservice.global.error.BaseException;
 
 @Service
 public class CartService implements CartUseCase {
@@ -72,7 +74,7 @@ public class CartService implements CartUseCase {
 
 		// 장바구니에 없거나 Soft Delete 된 경우
 		if (cartOutportDto == null || cartOutportDto.isDeleted()) {
-			throw new IllegalArgumentException("해당 제품이 장바구니에 없습니다.");
+			throw new BaseException(BaseResponseStatus.NO_EXIST_CART);
 		} else {
 			Cart cart = cartDomainService.updateCart(cartOutportDto, cartUpdateRequestDto);
 
@@ -88,10 +90,10 @@ public class CartService implements CartUseCase {
 			cartDeleteRequestDto.getMemberUuid(), cartDeleteRequestDto.getProductUuid()).orElse(null);
 
 		if (cartOutportDto == null) {
-			throw new IllegalArgumentException("해당 제품이 장바구니에 없습니다.");
+			throw new BaseException(BaseResponseStatus.NO_EXIST_CART);
 		} else {
 			Cart cart = cartDomainService.deleteCart(cartOutportDto, cartDeleteRequestDto);
-			
+
 			cartRepositoryPort.deleteCartItem(cartDtoMapper.toDto(cart));
 		}
 	}

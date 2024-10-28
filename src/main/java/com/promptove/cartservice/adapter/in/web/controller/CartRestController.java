@@ -18,7 +18,6 @@ import com.promptove.cartservice.adapter.in.web.vo.CartUpdateVo;
 import com.promptove.cartservice.application.port.in.CartRequestDto;
 import com.promptove.cartservice.application.port.in.CartUseCase;
 import com.promptove.cartservice.global.common.response.BaseResponse;
-import com.promptove.cartservice.global.common.response.BaseResponseStatus;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -40,14 +39,14 @@ public class CartRestController {
 
 		cartUseCase.createCart(cartVoMapper.toDto(cartCreateRequestVo));
 
-		return new BaseResponse<>(BaseResponseStatus.SUCCESS);
+		return new BaseResponse<>();
 	}
 
 	@Operation(summary = "장바구니 조회 API", tags = {"장바구니"})
 	@PostMapping("/list")
 	public BaseResponse<List<CartResponseVo>> getCart(@RequestBody CartGetRequestVo cartGetRequestVo) {
 		List<CartRequestDto> cartRequestDtoList = cartUseCase.getCart(cartVoMapper.toGetDto(cartGetRequestVo));
-		return new BaseResponse<>(BaseResponseStatus.SUCCESS, cartVoMapper.toVoList(cartRequestDtoList));
+		return new BaseResponse<>(cartVoMapper.toVoList(cartRequestDtoList));
 	}
 
 	// @Operation(summary = "장바구니 조회 API", tags = {"장바구니"})
@@ -64,7 +63,7 @@ public class CartRestController {
 
 		cartUseCase.updateCartItem(cartVoMapper.toUpdateDto(cartUpdateVo));
 
-		return new BaseResponse<>(BaseResponseStatus.SUCCESS);
+		return new BaseResponse<>();
 	}
 
 	@Operation(summary = "장바구니 항목 삭제 API", tags = {"장바구니"})
@@ -73,6 +72,6 @@ public class CartRestController {
 
 		cartUseCase.deleteCartItem(cartVoMapper.toDeleteDto(cartDeleteRequestVo));
 
-		return new BaseResponse<>(BaseResponseStatus.SUCCESS);
+		return new BaseResponse<>();
 	}
 }
