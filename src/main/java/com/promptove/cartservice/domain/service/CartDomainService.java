@@ -27,6 +27,8 @@ public class CartDomainService {
 			.productUuid(cartTransactionDto.getProductUuid())
 			.selected(cartTransactionDto.isSelected())
 			.deleted(cartTransactionDto.isDeleted())
+			.createdDate(cartTransactionDto.getCreatedDate())
+			.lastModifiedDate(cartTransactionDto.getLastModifiedDate())
 			.build()).toList();
 	}
 
