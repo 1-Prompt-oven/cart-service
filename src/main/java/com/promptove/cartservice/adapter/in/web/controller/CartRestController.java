@@ -49,14 +49,6 @@ public class CartRestController {
 		return new BaseResponse<>(cartVoMapper.toVoList(cartRequestDtoList));
 	}
 
-	// @Operation(summary = "장바구니 조회 API", tags = {"장바구니"})
-	// @GetMapping
-	// public BaseResponse<List<CartResponseVo>> getCart(@RequestHeader("memberUuid") String memberUuid) {
-	// 	List<CartRequestDto> cartRequestDtoList = cartUseCase.getCart(
-	// 		cartVoMapper.toGetDto(memberUuid));
-	// 	return new BaseResponse<>(BaseResponseStatus.SUCCESS, cartVoMapper.toVoList(cartRequestDtoList));
-	// }
-
 	@Operation(summary = "장바구니 선택 상태 변경 API", tags = {"장바구니"})
 	@PutMapping()
 	public BaseResponse<Void> updateCartItem(@RequestBody CartUpdateVo cartUpdateVo) {

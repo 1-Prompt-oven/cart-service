@@ -41,7 +41,7 @@ public class CartService implements CartUseCase {
 
 			Cart cart = cartDomainService.createCart(cartCreateRequestDto);
 
-			cartRepositoryPort.save(cartDtoMapper.toDto(cart));
+			cartRepositoryPort.save(cartDtoMapper.toCreateDto(cart));
 		} else {
 			// 예전에 담은적이 있고 삭제 된 상태면
 			if (cartOutportDto.isDeleted()) {

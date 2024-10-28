@@ -20,7 +20,6 @@ public class CartVoMapper {
 			.productUuid(cartCreateRequestVo.getProductUuid())
 			.selected(true)
 			.deleted(false)
-			.createdAt(cartCreateRequestVo.getCreatedAt())
 			.build();
 	}
 
@@ -29,11 +28,6 @@ public class CartVoMapper {
 			.memberUuid(cartGetRequestVo.getMemberUuid())
 			.build();
 	}
-	// public CartRequestDto toGetDto(String memberUuid) {
-	// 	return CartRequestDto.builder()
-	// 		.memberUuid(memberUuid)
-	// 		.build();
-	// }
 
 	public List<CartResponseVo> toVoList(List<CartRequestDto> cartRequestDtoList) {
 		return cartRequestDtoList.stream().map(cartRequestDto -> CartResponseVo.builder()
@@ -42,7 +36,8 @@ public class CartVoMapper {
 			.productUuid(cartRequestDto.getProductUuid())
 			.selected(cartRequestDto.isSelected())
 			.deleted(cartRequestDto.isDeleted())
-			.createdAt(cartRequestDto.getCreatedAt())
+			.createdDate(cartRequestDto.getCreatedDate())
+			.lastModifiedDate(cartRequestDto.getLastModifiedDate())
 			.build()).toList();
 	}
 

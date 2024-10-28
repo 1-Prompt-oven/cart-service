@@ -17,7 +17,17 @@ public class CartDtoMapper {
 			.productUuid(cartRequestDto.getProductUuid())
 			.selected(cartRequestDto.isSelected())
 			.deleted(cartRequestDto.isDeleted())
-			.createdAt(cartRequestDto.getCreatedAt())
+			.createdDate(cartRequestDto.getCreatedDate())
+			.lastModifiedDate(cartRequestDto.getLastModifiedDate())
+			.build();
+	}
+
+	public CartOutportDto toCreateDto(Cart cart) {
+		return CartOutportDto.builder()
+			.memberUuid(cart.getMemberUuid())
+			.productUuid(cart.getProductUuid())
+			.selected(cart.isSelected())
+			.deleted(cart.isDeleted())
 			.build();
 	}
 
@@ -28,7 +38,7 @@ public class CartDtoMapper {
 			.productUuid(cart.getProductUuid())
 			.selected(cart.isSelected())
 			.deleted(cart.isDeleted())
-			.createdAt(cart.getCreatedAt())
+			.createdDate(cart.getCreatedDate())
 			.build();
 	}
 
@@ -39,7 +49,8 @@ public class CartDtoMapper {
 			.productUuid(cart.getProductUuid())
 			.selected(cart.isSelected())
 			.deleted(cart.isDeleted())
-			.createdAt(cart.getCreatedAt())
+			.createdDate(cart.getCreatedDate())
+			.lastModifiedDate(cart.getLastModifiedDate())
 			.build()).toList();
 	}
 }

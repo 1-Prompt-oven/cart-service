@@ -45,7 +45,7 @@ public class CartDomainService {
 			.id(cartOutportDto.getId())
 			.memberUuid(cartOutportDto.getMemberUuid())
 			.productUuid(cartOutportDto.getProductUuid())
-			.selected(cartOutportDto.isSelected())
+			.selected(true)
 			.deleted(false)
 			.build();
 	}

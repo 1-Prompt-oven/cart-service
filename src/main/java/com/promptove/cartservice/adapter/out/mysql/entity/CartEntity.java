@@ -2,6 +2,8 @@ package com.promptove.cartservice.adapter.out.mysql.entity;
 
 import java.time.LocalDateTime;
 
+import com.promptove.cartservice.global.common.entity.BaseEntity;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor
-public class CartEntity {
+public class CartEntity extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +25,6 @@ public class CartEntity {
 	private String productUuid;
 	private boolean selected;
 	private boolean deleted;
-	private LocalDateTime createdAt;
 
 	@Builder
 	public CartEntity(Long id, String memberUuid, String productUuid, boolean selected, boolean deleted,
@@ -32,15 +33,6 @@ public class CartEntity {
 		this.memberUuid = memberUuid;
 		this.productUuid = productUuid;
 		this.selected = selected;
-		this.deleted = deleted;
-		this.createdAt = createdAt;
-	}
-
-	public void updateSelected(boolean selected) {
-		this.selected = selected;
-	}
-
-	public void updateDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
 }
