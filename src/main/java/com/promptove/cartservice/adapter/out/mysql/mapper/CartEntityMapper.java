@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 
 import com.promptove.cartservice.adapter.out.mysql.entity.CartEntity;
 import com.promptove.cartservice.application.port.out.CartOutportDto;
-import com.promptove.cartservice.domain.model.Cart;
 
 import lombok.extern.slf4j.Slf4j;
 
