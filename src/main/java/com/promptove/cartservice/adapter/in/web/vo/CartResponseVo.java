@@ -17,5 +17,6 @@ public class CartResponseVo {
 	private String productUuid;
 	private boolean selected;
 	private boolean deleted;
-	private LocalDateTime createdAt;
+	private LocalDateTime createdDate;
+	private LocalDateTime lastModifiedDate;
 }

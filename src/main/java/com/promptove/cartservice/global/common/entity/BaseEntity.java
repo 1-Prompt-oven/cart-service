@@ -11,15 +11,15 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 
-@EntityListeners(AuditingEntityListener.class)
 @Getter
 @MappedSuperclass
-public class BaseEntity {
+@EntityListeners(AuditingEntityListener.class)
+public abstract class BaseEntity {
 
 	@CreatedDate
-	@Column(nullable = false, updatable = false)
-	private LocalDateTime createdAt;
+	@Column(updatable = false)
+	private LocalDateTime createdDate; // 생성일
 
 	@LastModifiedDate
-	private LocalDateTime updatedAt;
+	private LocalDateTime lastModifiedDate; // 수정일
 }

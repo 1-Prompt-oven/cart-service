@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.promptove.cartservice.adapter.in.web.vo.CartCreateRequestVo;
 import com.promptove.cartservice.adapter.in.web.vo.CartDeleteRequestVo;
+import com.promptove.cartservice.adapter.in.web.vo.CartGetRequestVo;
 import com.promptove.cartservice.adapter.in.web.vo.CartResponseVo;
 import com.promptove.cartservice.adapter.in.web.vo.CartUpdateVo;
 import com.promptove.cartservice.application.port.in.CartRequestDto;
@@ -19,19 +20,12 @@ public class CartVoMapper {
 			.productUuid(cartCreateRequestVo.getProductUuid())
 			.selected(true)
 			.deleted(false)
-			.createdAt(cartCreateRequestVo.getCreatedAt())
 			.build();
 	}
 
-	// public CartRequestDto toGetDto(CartGetRequestVo cartGetRequestVo) {
-	// 	return CartRequestDto.builder()
-	// 		.memberUuid(cartGetRequestVo.getMemberUuid())
-	// 		.productUuid(cartGetRequestVo.getProductUuid())
-	// 		.build();
-	// }
-	public CartRequestDto toGetDto(String memberUuid) {
+	public CartRequestDto toGetDto(CartGetRequestVo cartGetRequestVo) {
 		return CartRequestDto.builder()
-			.memberUuid(memberUuid)
+			.memberUuid(cartGetRequestVo.getMemberUuid())
 			.build();
 	}
 
@@ -42,7 +36,8 @@ public class CartVoMapper {
 			.productUuid(cartRequestDto.getProductUuid())
 			.selected(cartRequestDto.isSelected())
 			.deleted(cartRequestDto.isDeleted())
-			.createdAt(cartRequestDto.getCreatedAt())
+			.createdDate(cartRequestDto.getCreatedDate())
+			.lastModifiedDate(cartRequestDto.getLastModifiedDate())
 			.build()).toList();
 	}
 

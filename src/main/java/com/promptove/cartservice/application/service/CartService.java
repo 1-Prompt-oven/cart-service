@@ -13,6 +13,8 @@ import com.promptove.cartservice.application.port.out.CartOutportDto;
 import com.promptove.cartservice.application.port.out.CartRepositoryPort;
 import com.promptove.cartservice.domain.model.Cart;
 import com.promptove.cartservice.domain.service.CartDomainService;
+import com.promptove.cartservice.global.common.response.BaseResponseStatus;
+import com.promptove.cartservice.global.error.BaseException;
 
 @Service
 public class CartService implements CartUseCase {
@@ -36,20 +38,27 @@ public class CartService implements CartUseCase {
 
 		// 예전에 담은적이 없으면
 		if (cartOutportDto == null) {
-			cartRepositoryPort.save(cartDtoMapper.toDto(cartDomainService.createCart(cartCreateRequestDto)));
+
+			Cart cart = cartDomainService.createCart(cartCreateRequestDto);
+
+			cartRepositoryPort.save(cartDtoMapper.toCreateDto(cart));
 		} else {
 			// 예전에 담은적이 있고 삭제 된 상태면
 			if (cartOutportDto.isDeleted()) {
-				cartRepositoryPort.updateCartItem(
-					cartDtoMapper.toDto(cartDomainService.updateExistCart(cartOutportDto)));
+
+				Cart cart = cartDomainService.updateExistCart(cartOutportDto);
+
+				cartRepositoryPort.updateCartItem(cartDtoMapper.toDto(cart));
 			}
 		}
 	}
 
 	@Override
 	public List<CartRequestDto> getCart(CartRequestDto cartGetRequestDto) {
-		List<CartOutportDto> cartOutportDtoList = cartRepositoryPort.getCart(
-			cartDtoMapper.toDto(cartDtoMapper.toDomain(cartGetRequestDto)));
+
+		Cart cart = cartDtoMapper.toDomain(cartGetRequestDto);
+
+		List<CartOutportDto> cartOutportDtoList = cartRepositoryPort.getCart(cartDtoMapper.toDto(cart));
 
 		List<Cart> cartList = cartDomainService.getCart(cartOutportDtoList);
 
@@ -65,9 +74,10 @@ public class CartService implements CartUseCase {
 
 		// 장바구니에 없거나 Soft Delete 된 경우
 		if (cartOutportDto == null || cartOutportDto.isDeleted()) {
-			throw new IllegalArgumentException("해당 제품이 장바구니에 없습니다.");
+			throw new BaseException(BaseResponseStatus.NO_EXIST_CART);
 		} else {
 			Cart cart = cartDomainService.updateCart(cartOutportDto, cartUpdateRequestDto);
+
 			cartRepositoryPort.updateCartItem(cartDtoMapper.toDto(cart));
 		}
 	}
@@ -80,9 +90,10 @@ public class CartService implements CartUseCase {
 			cartDeleteRequestDto.getMemberUuid(), cartDeleteRequestDto.getProductUuid()).orElse(null);
 
 		if (cartOutportDto == null) {
-			throw new IllegalArgumentException("해당 제품이 장바구니에 없습니다.");
+			throw new BaseException(BaseResponseStatus.NO_EXIST_CART);
 		} else {
 			Cart cart = cartDomainService.deleteCart(cartOutportDto, cartDeleteRequestDto);
+
 			cartRepositoryPort.deleteCartItem(cartDtoMapper.toDto(cart));
 		}
 	}
