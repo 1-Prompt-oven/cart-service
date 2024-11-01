@@ -1,10 +1,14 @@
 package com.promptove.cartservice.adapter.in.web.vo;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Builder
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class CartGetRequestVo {
-	// private String memberUuid;
+	private String memberUuid;
 }

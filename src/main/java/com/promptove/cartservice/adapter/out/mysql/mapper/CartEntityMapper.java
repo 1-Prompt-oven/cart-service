@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 
 import com.promptove.cartservice.adapter.out.mysql.entity.CartEntity;
 import com.promptove.cartservice.application.port.out.CartOutportDto;
-import com.promptove.cartservice.domain.model.Cart;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,7 +17,6 @@ public class CartEntityMapper {
 			.productUuid(cartOutportDto.getProductUuid())
 			.selected(cartOutportDto.isSelected())
 			.deleted(cartOutportDto.isDeleted())
-			.createdAt(cartOutportDto.getCreatedAt())
 			.build();
 	}
 
@@ -32,7 +30,6 @@ public class CartEntityMapper {
 			.productUuid(cartOutportDto.getProductUuid())
 			.selected(cartOutportDto.isSelected())
 			.deleted(cartOutportDto.isDeleted())
-			.createdAt(cartOutportDto.getCreatedAt())
 			.build();
 	}
 
@@ -44,7 +41,6 @@ public class CartEntityMapper {
 			.productUuid(cartOutportDto.getProductUuid())
 			.selected(cartOutportDto.isSelected())
 			.deleted(cartOutportDto.isDeleted())
-			.createdAt(cartOutportDto.getCreatedAt())
 			.build();
 	}
 
@@ -55,17 +51,8 @@ public class CartEntityMapper {
 			.productUuid(cartEntity.getProductUuid())
 			.selected(cartEntity.isSelected())
 			.deleted(cartEntity.isDeleted())
-			.createdAt(cartEntity.getCreatedAt())
-			.build();
-	}
-
-	public Cart EntityToDomain(CartEntity cartEntity) {
-		return Cart.builder()
-			.memberUuid(cartEntity.getMemberUuid())
-			.productUuid(cartEntity.getProductUuid())
-			.selected(cartEntity.isSelected())
-			.deleted(cartEntity.isDeleted())
-			.createdAt(cartEntity.getCreatedAt())
+			.createdDate(cartEntity.getCreatedDate())
+			.lastModifiedDate(cartEntity.getLastModifiedDate())
 			.build();
 	}
 }

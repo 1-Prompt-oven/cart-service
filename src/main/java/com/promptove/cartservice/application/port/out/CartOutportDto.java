@@ -18,16 +18,18 @@ public class CartOutportDto {
 	private String productUuid;
 	private boolean selected;
 	private boolean deleted;
-	private LocalDateTime createdAt;
+	private LocalDateTime createdDate;
+	private LocalDateTime lastModifiedDate;
 
 	@Builder
 	public CartOutportDto(Long id, String memberUuid, String productUuid, boolean selected, boolean deleted,
-		LocalDateTime createdAt) {
+		LocalDateTime createdDate, LocalDateTime lastModifiedDate) {
 		this.id = id;
 		this.memberUuid = memberUuid;
 		this.productUuid = productUuid;
 		this.selected = selected;
 		this.deleted = deleted;
-		this.createdAt = createdAt;
+		this.createdDate = createdDate;
+		this.lastModifiedDate = lastModifiedDate;
 	}
 }
