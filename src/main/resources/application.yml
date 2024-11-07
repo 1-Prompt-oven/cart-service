@@ -1,27 +1,16 @@
 spring:
   # 공통 설정
-  spring:
-    application:
-      name: cart-service
-    servlet:
-      multipart:
-        max-file-size: 20MB
-        max-request-size: 20MB
-    batch:
-      job:
-        enabled: true
-      jdbc:
-        initialize-schema: always
-
-  springdoc:
-    api-docs:
-      path: /v3/api-docs
-    swagger-ui:
-      path: /swagger-ui.html
-    packages-to-scan: org.example.productservice  # 스캔할 패키지 명시
-    default-produces-media-type: application/json
-    default-consumes-media-type: application/json
-    swagger-ui.operations-sorter: alpha
+  application:
+    name: cart-service
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+  batch:
+    job:
+      enabled: true
+    jdbc:
+      initialize-schema: always
 
   logging:
     level:
@@ -57,6 +46,15 @@ spring:
       ddl-auto: update
     show-sql: true
 
+  springdoc:
+    api-docs:
+      path: /v3/api-docs
+    swagger-ui:
+      path: /swagger-ui.html
+    packages-to-scan: org.example.productservice  # 스캔할 패키지 명시
+    default-produces-media-type: application/json
+    default-consumes-media-type: application/json
+    swagger-ui.operations-sorter: alpha
 
 eureka:
   client:
@@ -70,9 +68,3 @@ eureka:
 
 server:
   port: 0  # random port for local development
-
-springdoc:
-  api-docs:
-    path: /v3/api-docs
-  swagger-ui:
-    path: /swagger-ui.html
