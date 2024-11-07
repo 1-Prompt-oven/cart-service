@@ -1,4 +1,35 @@
 spring:
+  # 공통 설정
+  spring:
+    application:
+      name: product-service
+    servlet:
+      multipart:
+        max-file-size: 20MB
+        max-request-size: 20MB
+    batch:
+      job:
+        enabled: true
+      jdbc:
+        initialize-schema: always
+
+  springdoc:
+    api-docs:
+      path: /v3/api-docs
+    swagger-ui:
+      path: /swagger-ui.html
+    packages-to-scan: org.example.productservice  # 스캔할 패키지 명시
+    default-produces-media-type: application/json
+    default-consumes-media-type: application/json
+    swagger-ui.operations-sorter: alpha
+
+  logging:
+    level:
+      org.example.product_admin_service: DEBUG
+
+  server:
+    shutdown: graceful
+
   kafka:
     bootstrap-servers: localhost:9092
     consumer:
@@ -13,7 +44,7 @@ spring:
       concurrency: 3
 
   datasource:
-    url: jdbc:mysql://localhost:3306/cart_service
+    url: jdbc:mysql://localhost:3306/cart
     username: root
     password: jiwon1923
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -26,3 +57,16 @@ spring:
   properties:
     hibernate:
       dialect: org.hibernate.dialect.MySQL8dialect
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+server:
+  port: 0  # random port for local development
