@@ -35,7 +35,7 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .info(new Info()
                         .title("API Test")
-                        .description("product client docs")
+                        .description("cart service docs")
                         .version("1.0.0"))
                 .addSecurityItem(securityRequirement)
                 .components(components)
