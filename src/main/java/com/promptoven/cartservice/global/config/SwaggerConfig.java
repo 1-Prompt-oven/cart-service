@@ -5,23 +5,17 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 @Configuration
 public class SwaggerConfig {
 
-    //	@Bean
-    //	public OpenAPI openAPI() {
-    //		return new OpenAPI()
-    //			.info(new Info()
-    //				.title("API Test")
-    //				.description("product client docs")
-    //				.version("1.0.0"))
-    //			.servers(List.of(new Server().url("/")));
-    //	}
     @Bean
-    public OpenAPI customOpenApi() {
+    public OpenAPI openAPI() {
 
         // Security Secheme명
         String jwtSchemeName = "jwtAuth";
@@ -41,9 +35,10 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .info(new Info()
                         .title("API Test")
-                        .description("cart service docs")
+                        .description("product client docs")
                         .version("1.0.0"))
                 .addSecurityItem(securityRequirement)
-                .components(components);
+                .components(components)
+                .servers(List.of(new Server().url("/")));
     }
 }
