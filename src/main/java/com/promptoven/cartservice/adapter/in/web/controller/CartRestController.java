@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 @RestController
-@RequestMapping("/member/cart")
+@RequestMapping("/v1/member/cart")
 // input adapter
 public class CartRestController {
 
