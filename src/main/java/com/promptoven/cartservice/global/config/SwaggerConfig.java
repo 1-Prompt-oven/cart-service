@@ -23,12 +23,6 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI customOpenApi() {
 
-        Info info = new Info()
-                .title("SiVillage API")
-                .version("0.01")
-                .description("SiVillage API")
-                .termsOfService("http://swagger.io/terms/");
-
         // Security Secheme명
         String jwtSchemeName = "jwtAuth";
 
@@ -45,7 +39,10 @@ public class SwaggerConfig {
                         .name("Authorization"));
 
         return new OpenAPI()
-                .info(info)
+                .info(new Info()
+                        .title("API Test")
+                        .description("cart service docs")
+                        .version("1.0.0"))
                 .addSecurityItem(securityRequirement)
                 .components(components);
     }
