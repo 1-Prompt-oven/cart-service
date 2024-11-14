@@ -40,6 +40,11 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+  kafka:
+    bootstrap-servers: localhost:29092,localhost:39092,localhost:49092
+
+server:
+  port: 8082
 
 # prod 설정
 ---
