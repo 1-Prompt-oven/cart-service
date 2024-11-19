@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class KafkaConsumer {
 
-    private static final String CREATE_TOPIC = "create_payment_event";
+//    private static final String CREATE_TOPIC = "payment_create_event";
     private final CartRepositoryPort cartRepositoryPort;
     private final CartDomainService cartDomainService;
     private final CartDtoMapper cartDtoMapper;
@@ -26,13 +26,13 @@ public class KafkaConsumer {
         this.cartDtoMapper = new CartDtoMapper();
     }
 
-    @KafkaListener(topics = CREATE_TOPIC, groupId = "kafka-payment-cart-service")
+    @KafkaListener(topics = "${payment-create-event}", groupId = "kafka-payment-cart-service")
     @Transactional
     public void consumeCreate(RequestMessageDto message) {
 
         log.info("consumeCreate: {}", message);
 
-        message.getProductUuid().forEach(productUuid ->
+        message.getProductUuids().forEach(productUuid ->
                 cartRepositoryPort.getCartByProductUuidAndMemberUuid(
                         productUuid, message.getMemberUuid()
                 ).ifPresent(cartOutportDto -> {

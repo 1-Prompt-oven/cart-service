@@ -14,7 +14,7 @@ public class RequestMessageDto {
 
     private String memberUuid;
 
-    private List<String> productUuid;
+    private List<String> productUuids;
 
 
 }

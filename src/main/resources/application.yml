@@ -21,6 +21,8 @@ spring:
 
   server:
     shutdown: graceful
+  config:
+    import: classpath:eventTopic.yml
 
 # local 설정
 ---
@@ -41,7 +43,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
   kafka:
-    bootstrap-servers: localhost:29092,localhost:39092,localhost:49092
+    text-bootstrap-servers: localhost:29092,localhost:39092,localhost:49092
 
 server:
   port: 8082
@@ -74,6 +76,9 @@ eureka:
   instance:
     prefer-ip-address: true
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+  kafka:
+    text-bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
 
 server:
   port: 0  # random port for production
