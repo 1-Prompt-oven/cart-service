@@ -4,18 +4,18 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.promptoven.cartservice.application.port.in.CartRequestDto;
-import com.promptoven.cartservice.application.port.out.CartOutportDto;
+import com.promptoven.cartservice.application.port.in.dto.CartInportDto;
+import com.promptoven.cartservice.application.port.out.dto.CartOutportDto;
 import com.promptoven.cartservice.domain.model.Cart;
 
 @Service
 public class CartDomainService {
 
-	public Cart createCart(CartRequestDto cartRequestDto) {
+	public Cart createCart(CartInportDto cartInportDto) {
 		return Cart.builder()
-			.memberUuid(cartRequestDto.getMemberUuid())
-			.productUuid(cartRequestDto.getProductUuid())
-			.selected(cartRequestDto.isSelected())
+			.memberUuid(cartInportDto.getMemberUuid())
+			.productUuid(cartInportDto.getProductUuid())
+			.selected(cartInportDto.isSelected())
 			.deleted(false)
 			.build();
 	}
@@ -32,12 +32,12 @@ public class CartDomainService {
 			.build()).toList();
 	}
 
-	public Cart updateCart(CartOutportDto cartOutportDto, CartRequestDto cartRequestDto) {
+	public Cart updateCart(CartOutportDto cartOutportDto, CartInportDto cartInportDto) {
 		return Cart.builder()
 			.id(cartOutportDto.getId())
 			.memberUuid(cartOutportDto.getMemberUuid())
 			.productUuid(cartOutportDto.getProductUuid())
-			.selected(cartRequestDto.isSelected())
+			.selected(cartInportDto.isSelected())
 			.deleted(cartOutportDto.isDeleted())
 			.build();
 	}

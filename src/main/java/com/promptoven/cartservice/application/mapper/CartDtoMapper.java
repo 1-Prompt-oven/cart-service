@@ -4,21 +4,21 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.promptoven.cartservice.application.port.in.CartRequestDto;
-import com.promptoven.cartservice.application.port.out.CartOutportDto;
+import com.promptoven.cartservice.application.port.in.dto.CartInportDto;
+import com.promptoven.cartservice.application.port.out.dto.CartOutportDto;
 import com.promptoven.cartservice.domain.model.Cart;
 
 @Component
 public class CartDtoMapper {
 
-	public Cart toDomain(CartRequestDto cartRequestDto) {
+	public Cart toDomain(CartInportDto cartInportDto) {
 		return Cart.builder()
-			.memberUuid(cartRequestDto.getMemberUuid())
-			.productUuid(cartRequestDto.getProductUuid())
-			.selected(cartRequestDto.isSelected())
-			.deleted(cartRequestDto.isDeleted())
-			.createdDate(cartRequestDto.getCreatedDate())
-			.lastModifiedDate(cartRequestDto.getLastModifiedDate())
+			.memberUuid(cartInportDto.getMemberUuid())
+			.productUuid(cartInportDto.getProductUuid())
+			.selected(cartInportDto.isSelected())
+			.deleted(cartInportDto.isDeleted())
+			.createdDate(cartInportDto.getCreatedDate())
+			.lastModifiedDate(cartInportDto.getLastModifiedDate())
 			.build();
 	}
 
@@ -42,8 +42,8 @@ public class CartDtoMapper {
 			.build();
 	}
 
-	public List<CartRequestDto> toDtoList(List<Cart> cartList) {
-		return cartList.stream().map(cart -> CartRequestDto.builder()
+	public List<CartInportDto> toDtoList(List<Cart> cartList) {
+		return cartList.stream().map(cart -> CartInportDto.builder()
 			.id(cart.getId())
 			.memberUuid(cart.getMemberUuid())
 			.productUuid(cart.getProductUuid())

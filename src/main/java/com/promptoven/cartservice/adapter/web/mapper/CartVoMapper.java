@@ -1,10 +1,10 @@
-package com.promptoven.cartservice.adapter.in.web.mapper;
+package com.promptoven.cartservice.adapter.web.mapper;
 
-import com.promptoven.cartservice.adapter.in.web.vo.CartCreateRequestVo;
-import com.promptoven.cartservice.adapter.in.web.vo.CartDeleteRequestVo;
-import com.promptoven.cartservice.adapter.in.web.vo.CartResponseVo;
-import com.promptoven.cartservice.adapter.in.web.vo.CartUpdateVo;
-import com.promptoven.cartservice.application.port.in.CartRequestDto;
+import com.promptoven.cartservice.adapter.web.vo.CartCreateRequestVo;
+import com.promptoven.cartservice.adapter.web.vo.CartDeleteRequestVo;
+import com.promptoven.cartservice.adapter.web.vo.CartResponseVo;
+import com.promptoven.cartservice.adapter.web.vo.CartUpdateVo;
+import com.promptoven.cartservice.application.port.in.dto.CartInportDto;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,8 +12,8 @@ import java.util.List;
 @Component
 public class CartVoMapper {
 
-    public CartRequestDto toDto(CartCreateRequestVo cartCreateRequestVo) {
-        return CartRequestDto.builder()
+    public CartInportDto toDto(CartCreateRequestVo cartCreateRequestVo) {
+        return CartInportDto.builder()
                 .memberUuid(cartCreateRequestVo.getMemberUuid())
                 .productUuid(cartCreateRequestVo.getProductUuid())
                 .selected(true)
@@ -21,14 +21,14 @@ public class CartVoMapper {
                 .build();
     }
 
-    public CartRequestDto toGetDto(String memberUuid) {
-        return CartRequestDto.builder()
+    public CartInportDto toGetDto(String memberUuid) {
+        return CartInportDto.builder()
                 .memberUuid(memberUuid)
                 .build();
     }
 
-    public List<CartResponseVo> toVoList(List<CartRequestDto> cartRequestDtoList) {
-        return cartRequestDtoList.stream().map(cartRequestDto -> CartResponseVo.builder()
+    public List<CartResponseVo> toVoList(List<CartInportDto> cartInportDtoList) {
+        return cartInportDtoList.stream().map(cartRequestDto -> CartResponseVo.builder()
                 .id(cartRequestDto.getId())
                 .memberUuid(cartRequestDto.getMemberUuid())
                 .productUuid(cartRequestDto.getProductUuid())
@@ -39,15 +39,15 @@ public class CartVoMapper {
                 .build()).toList();
     }
 
-    public CartRequestDto toUpdateDto(CartUpdateVo cartUpdateVo) {
-        return CartRequestDto.builder()
+    public CartInportDto toUpdateDto(CartUpdateVo cartUpdateVo) {
+        return CartInportDto.builder()
                 .id(cartUpdateVo.getCartId())
                 .selected(cartUpdateVo.isSelected())
                 .build();
     }
 
-    public CartRequestDto toDeleteDto(CartDeleteRequestVo cartDeleteRequestVo) {
-        return CartRequestDto.builder()
+    public CartInportDto toDeleteDto(CartDeleteRequestVo cartDeleteRequestVo) {
+        return CartInportDto.builder()
                 .id(cartDeleteRequestVo.getCartId())
                 .build();
     }

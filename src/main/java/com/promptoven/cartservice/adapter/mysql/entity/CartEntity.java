@@ -1,4 +1,4 @@
-package com.promptoven.cartservice.adapter.out.mysql.entity;
+package com.promptoven.cartservice.adapter.mysql.entity;
 
 import java.time.LocalDateTime;
 

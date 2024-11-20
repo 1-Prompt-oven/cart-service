@@ -1,11 +1,10 @@
-package com.promptoven.cartservice.adapter.out.mysql.repository;
+package com.promptoven.cartservice.adapter.mysql.repository;
 
 import java.util.List;
 import java.util.Optional;
 
+import com.promptoven.cartservice.adapter.mysql.entity.CartEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import com.promptoven.cartservice.adapter.out.mysql.entity.CartEntity;
 
 public interface CartJpaRepository extends JpaRepository<CartEntity, Long> {
 

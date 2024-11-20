@@ -1,4 +1,4 @@
-package com.promptoven.cartservice.adapter.in.web.vo;
+package com.promptoven.cartservice.adapter.web.vo;
 
 import lombok.Builder;
 import lombok.Getter;

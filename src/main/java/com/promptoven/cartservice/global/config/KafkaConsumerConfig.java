@@ -1,6 +1,6 @@
 package com.promptoven.cartservice.global.config;
 
-import com.promptoven.cartservice.application.port.in.RequestMessageDto;
+import com.promptoven.cartservice.application.port.in.dto.RequestMessageDto;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;

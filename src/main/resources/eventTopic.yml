@@ -1,2 +1,2 @@
 # Payment Service Produced
-payment-create-event: payment-member-products-created # {paymentId : String, memberUUID : String, productUUID : List<String>}
+payment-create-event: payment-create-event # {paymentId : String, memberUUID : String, productUUID : List<String>}

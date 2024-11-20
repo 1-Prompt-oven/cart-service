@@ -1,4 +1,4 @@
-package com.promptoven.cartservice.application.port.in;
+package com.promptoven.cartservice.application.port.in.dto;
 
 import lombok.*;
 
