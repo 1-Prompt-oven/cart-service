@@ -6,13 +6,15 @@ import java.util.Optional;
 //output port
 public interface CartRepositoryPort {
 
-	Optional<CartOutportDto> getCartByProductUuidAndMemberUuid(String productUuid, String memberUuid);
+    Optional<CartOutportDto> getCartByProductUuidAndMemberUuid(String productUuid, String memberUuid);
 
-	void save(CartOutportDto cartOutportDto);
+    Optional<CartOutportDto> getCartByCartId(Long id);
 
-	List<CartOutportDto> getCart(CartOutportDto cartOutportDto);
+    void save(CartOutportDto cartOutportDto);
 
-	void updateCartItem(CartOutportDto cartOutportDto);
+    List<CartOutportDto> getCart(CartOutportDto cartOutportDto);
 
-	void deleteCartItem(CartOutportDto cartOutportDto);
+    void updateCartItem(CartOutportDto cartOutportDto);
+
+    void deleteCartItem(CartOutportDto cartOutportDto);
 }
