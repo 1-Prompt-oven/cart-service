@@ -1,11 +1,5 @@
 package com.promptoven.cartservice.application.service;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.promptoven.cartservice.application.mapper.CartDtoMapper;
 import com.promptoven.cartservice.application.port.in.CartRequestDto;
 import com.promptoven.cartservice.application.port.in.CartUseCase;
@@ -15,87 +9,88 @@ import com.promptoven.cartservice.domain.model.Cart;
 import com.promptoven.cartservice.domain.service.CartDomainService;
 import com.promptoven.cartservice.global.common.response.BaseResponseStatus;
 import com.promptoven.cartservice.global.error.BaseException;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class CartService implements CartUseCase {
 
-	private final CartRepositoryPort cartRepositoryPort;
-	private final CartDomainService cartDomainService;
-	private final CartDtoMapper cartDtoMapper;
+    private final CartRepositoryPort cartRepositoryPort;
+    private final CartDomainService cartDomainService;
+    private final CartDtoMapper cartDtoMapper;
 
-	public CartService(@Qualifier("cartMysqlAdapter") CartRepositoryPort cartRepositoryPort) {
-		this.cartRepositoryPort = cartRepositoryPort;
-		this.cartDomainService = new CartDomainService();
-		this.cartDtoMapper = new CartDtoMapper();
-	}
+    public CartService(@Qualifier("cartMysqlAdapter") CartRepositoryPort cartRepositoryPort) {
+        this.cartRepositoryPort = cartRepositoryPort;
+        this.cartDomainService = new CartDomainService();
+        this.cartDtoMapper = new CartDtoMapper();
+    }
 
-	@Override
-	@Transactional
-	public void createCart(CartRequestDto cartCreateRequestDto) {
+    @Override
+    @Transactional
+    public void createCart(CartRequestDto cartCreateRequestDto) {
 
-		CartOutportDto cartOutportDto = cartRepositoryPort.getCartByProductUuidAndMemberUuid(
-			cartCreateRequestDto.getMemberUuid(), cartCreateRequestDto.getProductUuid()).orElse(null);
+        cartRepositoryPort.getCartByProductUuidAndMemberUuid(
+                cartCreateRequestDto.getProductUuid(),
+                cartCreateRequestDto.getMemberUuid()
+        ).ifPresentOrElse(
+                this::handleExistingCart, // 메서드 참조로 변경
+                () -> handleNewCart(cartCreateRequestDto) // 생성 시 추가 파라미터가 필요하므로 람다 유지
+        );
+    }
 
-		// 예전에 담은적이 없으면
-		if (cartOutportDto == null) {
+    @Override
+    public List<CartRequestDto> getCart(CartRequestDto cartGetRequestDto) {
 
-			Cart cart = cartDomainService.createCart(cartCreateRequestDto);
+        Cart cart = cartDtoMapper.toDomain(cartGetRequestDto);
 
-			cartRepositoryPort.save(cartDtoMapper.toCreateDto(cart));
-		} else {
-			// 예전에 담은적이 있고 삭제 된 상태면
-			if (cartOutportDto.isDeleted()) {
+        List<CartOutportDto> cartOutportDtoList = cartRepositoryPort.getCart(cartDtoMapper.toDto(cart));
 
-				Cart cart = cartDomainService.updateExistCart(cartOutportDto);
+        List<Cart> cartList = cartDomainService.getCart(cartOutportDtoList);
 
-				cartRepositoryPort.updateCartItem(cartDtoMapper.toDto(cart));
-			}
-		}
-	}
+        return cartDtoMapper.toDtoList(cartList);
+    }
 
-	@Override
-	public List<CartRequestDto> getCart(CartRequestDto cartGetRequestDto) {
+    @Transactional
+    @Override
+    public void updateCartItem(CartRequestDto cartUpdateRequestDto) {
 
-		Cart cart = cartDtoMapper.toDomain(cartGetRequestDto);
+        CartOutportDto cartOutportDto = cartRepositoryPort.getCartByProductUuidAndMemberUuid(
+                        cartUpdateRequestDto.getProductUuid(), cartUpdateRequestDto.getMemberUuid()).
+                orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_CART));
 
-		List<CartOutportDto> cartOutportDtoList = cartRepositoryPort.getCart(cartDtoMapper.toDto(cart));
+        Cart cart = cartDomainService.updateCart(cartOutportDto, cartUpdateRequestDto);
 
-		List<Cart> cartList = cartDomainService.getCart(cartOutportDtoList);
+        cartRepositoryPort.updateCartItem(cartDtoMapper.toDto(cart));
+    }
 
-		return cartDtoMapper.toDtoList(cartList);
-	}
+    @Transactional
+    @Override
+    public void deleteCartItem(CartRequestDto cartDeleteRequestDto) {
 
-	@Transactional
-	@Override
-	public void updateCartItem(CartRequestDto cartUpdateRequestDto) {
+        CartOutportDto cartOutportDto = cartRepositoryPort.getCartByProductUuidAndMemberUuid(
+                        cartDeleteRequestDto.getProductUuid(), cartDeleteRequestDto.getMemberUuid())
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_CART));
 
-		CartOutportDto cartOutportDto = cartRepositoryPort.getCartByProductUuidAndMemberUuid(
-			cartUpdateRequestDto.getMemberUuid(), cartUpdateRequestDto.getProductUuid()).orElse(null);
+        Cart cart = cartDomainService.deleteCart(cartOutportDto);
 
-		// 장바구니에 없거나 Soft Delete 된 경우
-		if (cartOutportDto == null || cartOutportDto.isDeleted()) {
-			throw new BaseException(BaseResponseStatus.NO_EXIST_CART);
-		} else {
-			Cart cart = cartDomainService.updateCart(cartOutportDto, cartUpdateRequestDto);
+        cartRepositoryPort.deleteCartItem(cartDtoMapper.toDto(cart));
+    }
 
-			cartRepositoryPort.updateCartItem(cartDtoMapper.toDto(cart));
-		}
-	}
+    // 새로운 카트 생성 처리
+    private void handleNewCart(CartRequestDto cartCreateRequestDto) {
+        Cart cart = cartDomainService.createCart(cartCreateRequestDto);
+        cartRepositoryPort.save(cartDtoMapper.toCreateDto(cart));
+    }
 
-	@Transactional
-	@Override
-	public void deleteCartItem(CartRequestDto cartDeleteRequestDto) {
-
-		CartOutportDto cartOutportDto = cartRepositoryPort.getCartByProductUuidAndMemberUuid(
-			cartDeleteRequestDto.getMemberUuid(), cartDeleteRequestDto.getProductUuid()).orElse(null);
-
-		if (cartOutportDto == null) {
-			throw new BaseException(BaseResponseStatus.NO_EXIST_CART);
-		} else {
-			Cart cart = cartDomainService.deleteCart(cartOutportDto, cartDeleteRequestDto);
-
-			cartRepositoryPort.deleteCartItem(cartDtoMapper.toDto(cart));
-		}
-	}
+    // 이전에 삭제된 카트 활성화 처리
+    private void handleExistingCart(CartOutportDto cartOutportDto) {
+        if (cartOutportDto.isDeleted()) {
+            Cart cart = cartDomainService.updateExistCart(cartOutportDto);
+            cartRepositoryPort.updateCartItem(cartDtoMapper.toDto(cart));
+        }
+    }
 }
 

@@ -52,7 +52,7 @@ public class CartDomainService {
 			.build();
 	}
 
-	public Cart deleteCart(CartOutportDto cartOutportDto, CartRequestDto cartRequestDto) {
+	public Cart deleteCart(CartOutportDto cartOutportDto) {
 		return Cart.builder()
 			.id(cartOutportDto.getId())
 			.memberUuid(cartOutportDto.getMemberUuid())
