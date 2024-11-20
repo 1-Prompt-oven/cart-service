@@ -1,4 +1,4 @@
-package com.promptoven.cartservice.application.port.dto.in;
+package com.promptoven.cartservice.application.port.in.dto;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
-public class CartRequestDto {
+public class CartInportDto {
     //여러가지 컬럼이 다 들어감
     private Long id;
     private String memberUuid;
@@ -19,8 +19,8 @@ public class CartRequestDto {
     private LocalDateTime lastModifiedDate;
 
     @Builder
-    public CartRequestDto(Long id, String memberUuid, String productUuid, boolean selected, boolean deleted,
-                          LocalDateTime createdDate, LocalDateTime lastModifiedDate) {
+    public CartInportDto(Long id, String memberUuid, String productUuid, boolean selected, boolean deleted,
+                         LocalDateTime createdDate, LocalDateTime lastModifiedDate) {
         this.id = id;
         this.memberUuid = memberUuid;
         this.productUuid = productUuid;

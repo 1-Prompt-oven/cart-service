@@ -3,7 +3,7 @@ package com.promptoven.cartservice.adapter.mysql.mapper;
 import com.promptoven.cartservice.adapter.mysql.entity.CartEntity;
 import org.springframework.stereotype.Component;
 
-import com.promptoven.cartservice.application.port.dto.out.CartOutportDto;
+import com.promptoven.cartservice.application.port.out.dto.CartOutportDto;
 
 import lombok.extern.slf4j.Slf4j;
 

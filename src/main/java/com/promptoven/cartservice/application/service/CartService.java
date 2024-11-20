@@ -1,10 +1,10 @@
 package com.promptoven.cartservice.application.service;
 
 import com.promptoven.cartservice.application.mapper.CartDtoMapper;
-import com.promptoven.cartservice.application.port.dto.in.CartRequestDto;
-import com.promptoven.cartservice.application.port.call.CartUseCase;
-import com.promptoven.cartservice.application.port.dto.out.CartOutportDto;
-import com.promptoven.cartservice.application.port.call.CartRepositoryPort;
+import com.promptoven.cartservice.application.port.in.dto.CartInportDto;
+import com.promptoven.cartservice.application.port.in.usecase.CartUseCase;
+import com.promptoven.cartservice.application.port.out.dto.CartOutportDto;
+import com.promptoven.cartservice.application.port.out.call.CartRepositoryPort;
 import com.promptoven.cartservice.domain.model.Cart;
 import com.promptoven.cartservice.domain.service.CartDomainService;
 import com.promptoven.cartservice.global.common.response.BaseResponseStatus;
@@ -30,7 +30,7 @@ public class CartService implements CartUseCase {
 
     @Override
     @Transactional
-    public void createCart(CartRequestDto cartCreateRequestDto) {
+    public void createCart(CartInportDto cartCreateRequestDto) {
 
         cartRepositoryPort.getCartByProductUuidAndMemberUuid(
                 cartCreateRequestDto.getProductUuid(),
@@ -42,7 +42,7 @@ public class CartService implements CartUseCase {
     }
 
     @Override
-    public List<CartRequestDto> getCart(CartRequestDto cartGetRequestDto) {
+    public List<CartInportDto> getCart(CartInportDto cartGetRequestDto) {
 
         Cart cart = cartDtoMapper.toDomain(cartGetRequestDto);
 
@@ -55,7 +55,7 @@ public class CartService implements CartUseCase {
 
     @Transactional
     @Override
-    public void updateCartItem(CartRequestDto cartUpdateRequestDto) {
+    public void updateCartItem(CartInportDto cartUpdateRequestDto) {
 
         CartOutportDto cartOutportDto = cartRepositoryPort.getCartByCartId(
                 cartUpdateRequestDto.getId()).
@@ -68,7 +68,7 @@ public class CartService implements CartUseCase {
 
     @Transactional
     @Override
-    public void deleteCartItem(CartRequestDto cartDeleteRequestDto) {
+    public void deleteCartItem(CartInportDto cartDeleteRequestDto) {
 
         CartOutportDto cartOutportDto = cartRepositoryPort.getCartByCartId(
                 cartDeleteRequestDto.getId())
@@ -80,7 +80,7 @@ public class CartService implements CartUseCase {
     }
 
     // 새로운 카트 생성 처리
-    private void handleNewCart(CartRequestDto cartCreateRequestDto) {
+    private void handleNewCart(CartInportDto cartCreateRequestDto) {
         Cart cart = cartDomainService.createCart(cartCreateRequestDto);
         cartRepositoryPort.save(cartDtoMapper.toCreateDto(cart));
     }

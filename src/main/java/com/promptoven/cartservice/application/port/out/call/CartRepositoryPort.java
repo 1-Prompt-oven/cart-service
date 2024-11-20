@@ -1,6 +1,6 @@
-package com.promptoven.cartservice.application.port.call;
+package com.promptoven.cartservice.application.port.out.call;
 
-import com.promptoven.cartservice.application.port.dto.out.CartOutportDto;
+import com.promptoven.cartservice.application.port.out.dto.CartOutportDto;
 
 import java.util.List;
 import java.util.Optional;

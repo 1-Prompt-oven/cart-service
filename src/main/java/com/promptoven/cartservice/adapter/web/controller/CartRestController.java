@@ -5,8 +5,8 @@ import com.promptoven.cartservice.adapter.web.vo.CartCreateRequestVo;
 import com.promptoven.cartservice.adapter.web.vo.CartDeleteRequestVo;
 import com.promptoven.cartservice.adapter.web.vo.CartResponseVo;
 import com.promptoven.cartservice.adapter.web.vo.CartUpdateVo;
-import com.promptoven.cartservice.application.port.dto.in.CartRequestDto;
-import com.promptoven.cartservice.application.port.call.CartUseCase;
+import com.promptoven.cartservice.application.port.in.dto.CartInportDto;
+import com.promptoven.cartservice.application.port.in.usecase.CartUseCase;
 import com.promptoven.cartservice.global.common.response.BaseResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -37,8 +37,8 @@ public class CartRestController {
     @Operation(summary = "장바구니 조회 API", tags = {"장바구니"})
     @GetMapping("/list/{memberUuid}")
     public BaseResponse<List<CartResponseVo>> getCart(@PathVariable String memberUuid) {
-        List<CartRequestDto> cartRequestDtoList = cartUseCase.getCart(cartVoMapper.toGetDto(memberUuid));
-        return new BaseResponse<>(cartVoMapper.toVoList(cartRequestDtoList));
+        List<CartInportDto> cartInportDtoList = cartUseCase.getCart(cartVoMapper.toGetDto(memberUuid));
+        return new BaseResponse<>(cartVoMapper.toVoList(cartInportDtoList));
     }
 
     @Operation(summary = "장바구니 선택 상태 변경 API", tags = {"장바구니"})
