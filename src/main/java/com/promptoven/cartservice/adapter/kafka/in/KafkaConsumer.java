@@ -1,8 +1,8 @@
-package com.promptoven.cartservice.adapter.in.kafka;
+package com.promptoven.cartservice.adapter.kafka.in;
 
 import com.promptoven.cartservice.application.mapper.CartDtoMapper;
-import com.promptoven.cartservice.application.port.in.RequestMessageDto;
-import com.promptoven.cartservice.application.port.out.CartRepositoryPort;
+import com.promptoven.cartservice.application.port.dto.in.RequestMessageDto;
+import com.promptoven.cartservice.application.port.call.CartRepositoryPort;
 import com.promptoven.cartservice.domain.model.Cart;
 import com.promptoven.cartservice.domain.service.CartDomainService;
 import lombok.extern.slf4j.Slf4j;

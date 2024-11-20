@@ -1,8 +1,8 @@
-package com.promptoven.cartservice.adapter.out.mysql.repository;
+package com.promptoven.cartservice.adapter.mysql.repository;
 
-import com.promptoven.cartservice.adapter.out.mysql.mapper.CartEntityMapper;
-import com.promptoven.cartservice.application.port.out.CartOutportDto;
-import com.promptoven.cartservice.application.port.out.CartRepositoryPort;
+import com.promptoven.cartservice.adapter.mysql.mapper.CartEntityMapper;
+import com.promptoven.cartservice.application.port.dto.out.CartOutportDto;
+import com.promptoven.cartservice.application.port.call.CartRepositoryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;

@@ -1,10 +1,10 @@
 package com.promptoven.cartservice.application.service;
 
 import com.promptoven.cartservice.application.mapper.CartDtoMapper;
-import com.promptoven.cartservice.application.port.in.CartRequestDto;
-import com.promptoven.cartservice.application.port.in.CartUseCase;
-import com.promptoven.cartservice.application.port.out.CartOutportDto;
-import com.promptoven.cartservice.application.port.out.CartRepositoryPort;
+import com.promptoven.cartservice.application.port.dto.in.CartRequestDto;
+import com.promptoven.cartservice.application.port.call.CartUseCase;
+import com.promptoven.cartservice.application.port.dto.out.CartOutportDto;
+import com.promptoven.cartservice.application.port.call.CartRepositoryPort;
 import com.promptoven.cartservice.domain.model.Cart;
 import com.promptoven.cartservice.domain.service.CartDomainService;
 import com.promptoven.cartservice.global.common.response.BaseResponseStatus;

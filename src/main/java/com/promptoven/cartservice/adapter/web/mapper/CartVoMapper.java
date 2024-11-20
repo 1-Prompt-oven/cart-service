@@ -1,10 +1,10 @@
-package com.promptoven.cartservice.adapter.in.web.mapper;
+package com.promptoven.cartservice.adapter.web.mapper;
 
-import com.promptoven.cartservice.adapter.in.web.vo.CartCreateRequestVo;
-import com.promptoven.cartservice.adapter.in.web.vo.CartDeleteRequestVo;
-import com.promptoven.cartservice.adapter.in.web.vo.CartResponseVo;
-import com.promptoven.cartservice.adapter.in.web.vo.CartUpdateVo;
-import com.promptoven.cartservice.application.port.in.CartRequestDto;
+import com.promptoven.cartservice.adapter.web.vo.CartCreateRequestVo;
+import com.promptoven.cartservice.adapter.web.vo.CartDeleteRequestVo;
+import com.promptoven.cartservice.adapter.web.vo.CartResponseVo;
+import com.promptoven.cartservice.adapter.web.vo.CartUpdateVo;
+import com.promptoven.cartservice.application.port.dto.in.CartRequestDto;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

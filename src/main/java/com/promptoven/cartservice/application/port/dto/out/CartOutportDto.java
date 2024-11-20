@@ -1,4 +1,4 @@
-package com.promptoven.cartservice.application.port.out;
+package com.promptoven.cartservice.application.port.dto.out;
 
 import java.time.LocalDateTime;
 

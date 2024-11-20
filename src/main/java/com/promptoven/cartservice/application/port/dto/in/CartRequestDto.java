@@ -1,4 +1,4 @@
-package com.promptoven.cartservice.application.port.in;
+package com.promptoven.cartservice.application.port.dto.in;
 
 import lombok.Builder;
 import lombok.Getter;
