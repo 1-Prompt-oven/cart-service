@@ -1,16 +1,14 @@
 package com.promptoven.cartservice.adapter.out.mysql.repository;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
-
 import com.promptoven.cartservice.adapter.out.mysql.mapper.CartEntityMapper;
 import com.promptoven.cartservice.application.port.out.CartOutportDto;
 import com.promptoven.cartservice.application.port.out.CartRepositoryPort;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Repository
@@ -18,37 +16,43 @@ import lombok.RequiredArgsConstructor;
 // output adapter
 public class CartRepositoryImpl implements CartRepositoryPort {
 
-	private final CartJpaRepository cartJpaRepository;
-	private final CartEntityMapper cartEntityMapper;
+    private final CartJpaRepository cartJpaRepository;
+    private final CartEntityMapper cartEntityMapper;
 
-	@Override
-	public Optional<CartOutportDto> getCartByProductUuidAndMemberUuid(String productUuid, String memberUuid) {
+    @Override
+    public Optional<CartOutportDto> getCartByProductUuidAndMemberUuid(String productUuid, String memberUuid) {
 
-		return cartJpaRepository.findByProductUuidAndMemberUuid(productUuid, memberUuid).map(cartEntityMapper::toDto);
-	}
+        return cartJpaRepository.findByProductUuidAndMemberUuid(productUuid, memberUuid).map(cartEntityMapper::toDto);
+    }
 
-	@Override
-	public void save(CartOutportDto cartOutportDto) {
+    @Override
+    public Optional<CartOutportDto> getCartByCartId(Long id) {
 
-		cartJpaRepository.save(cartEntityMapper.toEntity(cartOutportDto));
-	}
+        return cartJpaRepository.findById(id).map(cartEntityMapper::toDto);
+    }
 
-	@Override
-	public List<CartOutportDto> getCart(CartOutportDto cartOutportDto) {
+    @Override
+    public void save(CartOutportDto cartOutportDto) {
 
-		return cartJpaRepository.findByMemberUuidAndDeletedFalse(cartOutportDto.getMemberUuid()).stream()
-			.map(cartEntityMapper::toDto).toList();
-	}
+        cartJpaRepository.save(cartEntityMapper.toEntity(cartOutportDto));
+    }
 
-	@Override
-	public void updateCartItem(CartOutportDto cartOutportDto) {
+    @Override
+    public List<CartOutportDto> getCart(CartOutportDto cartOutportDto) {
 
-		cartJpaRepository.save(cartEntityMapper.toUpdateEntity(cartOutportDto));
-	}
+        return cartJpaRepository.findByMemberUuidAndDeletedFalse(cartOutportDto.getMemberUuid()).stream()
+                .map(cartEntityMapper::toDto).toList();
+    }
 
-	@Override
-	public void deleteCartItem(CartOutportDto cartOutportDto) {
+    @Override
+    public void updateCartItem(CartOutportDto cartOutportDto) {
 
-		cartJpaRepository.save(cartEntityMapper.toDeleteEntity(cartOutportDto));
-	}
+        cartJpaRepository.save(cartEntityMapper.toUpdateEntity(cartOutportDto));
+    }
+
+    @Override
+    public void deleteCartItem(CartOutportDto cartOutportDto) {
+
+        cartJpaRepository.save(cartEntityMapper.toDeleteEntity(cartOutportDto));
+    }
 }

@@ -41,16 +41,14 @@ public class CartVoMapper {
 
     public CartRequestDto toUpdateDto(CartUpdateVo cartUpdateVo) {
         return CartRequestDto.builder()
-                .memberUuid(cartUpdateVo.getMemberUuid())
-                .productUuid(cartUpdateVo.getProductUuid())
+                .id(cartUpdateVo.getCartId())
                 .selected(cartUpdateVo.isSelected())
                 .build();
     }
 
     public CartRequestDto toDeleteDto(CartDeleteRequestVo cartDeleteRequestVo) {
         return CartRequestDto.builder()
-                .memberUuid(cartDeleteRequestVo.getMemberUuid())
-                .productUuid(cartDeleteRequestVo.getProductUuid())
+                .id(cartDeleteRequestVo.getCartId())
                 .build();
     }
 }

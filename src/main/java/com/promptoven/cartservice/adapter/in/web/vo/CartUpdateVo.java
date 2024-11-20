@@ -6,7 +6,6 @@ import lombok.Getter;
 @Getter
 @Builder
 public class CartUpdateVo {
-	private String memberUuid;
-	private String productUuid;
-	private boolean selected;
+    private Long cartId;
+    private boolean selected;
 }

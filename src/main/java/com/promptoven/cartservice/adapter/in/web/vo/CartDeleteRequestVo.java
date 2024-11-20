@@ -6,6 +6,5 @@ import lombok.Getter;
 @Builder
 @Getter
 public class CartDeleteRequestVo {
-	private String memberUuid;
-	private String productUuid;
+    private Long cartId;
 }
