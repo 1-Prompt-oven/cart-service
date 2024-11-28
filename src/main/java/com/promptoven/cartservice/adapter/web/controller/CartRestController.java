@@ -57,4 +57,10 @@ public class CartRestController {
 
         return new BaseResponse<>();
     }
+
+    @Operation(summary = "회원의 장바구니 담은 유무", tags = {"장바구니"})
+    @GetMapping("/exist")
+    public BaseResponse<Boolean> isCartExist(@RequestParam String memberUuid, @RequestParam String productUuid) {
+        return new BaseResponse<>(cartUseCase.isCartExist(cartVoMapper.toExistDto(productUuid, memberUuid)));
+    }
 }

@@ -80,6 +80,15 @@ public class CartService implements CartUseCase {
         cartRepositoryPort.deleteCartItem(cartDtoMapper.toDto(cart));
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public Boolean isCartExist(CartInportDto cartInportDto) {
+        return cartRepositoryPort.getCartByProductUuidAndMemberUuid(
+                cartInportDto.getProductUuid(),
+                cartInportDto.getMemberUuid()
+        ).isPresent();
+    }
+
     // 새로운 카트 생성 처리
     private void handleNewCart(CartInportDto cartCreateRequestDto) {
         Cart cart = cartDomainService.createCart(cartCreateRequestDto);
