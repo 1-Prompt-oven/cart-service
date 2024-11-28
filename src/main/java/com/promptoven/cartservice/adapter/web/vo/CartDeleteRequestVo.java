@@ -1,15 +1,18 @@
 package com.promptoven.cartservice.adapter.web.vo;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Builder
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
 public class CartDeleteRequestVo {
 
-    private Long cartId;
+    private final Long cartId;
+
+    @JsonCreator
+    public CartDeleteRequestVo(@JsonProperty("cartId") Long cartId) {
+        this.cartId = cartId;
+    }
 }

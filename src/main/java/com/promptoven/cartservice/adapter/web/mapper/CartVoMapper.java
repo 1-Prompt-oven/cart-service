@@ -29,7 +29,7 @@ public class CartVoMapper {
 
     public List<CartResponseVo> toVoList(List<CartInportDto> cartInportDtoList) {
         return cartInportDtoList.stream().map(cartRequestDto -> CartResponseVo.builder()
-                .id(cartRequestDto.getId())
+                .id(cartRequestDto.getCartId())
                 .memberUuid(cartRequestDto.getMemberUuid())
                 .productUuid(cartRequestDto.getProductUuid())
                 .selected(cartRequestDto.isSelected())
@@ -41,14 +41,14 @@ public class CartVoMapper {
 
     public CartInportDto toUpdateDto(CartUpdateVo cartUpdateVo) {
         return CartInportDto.builder()
-                .id(cartUpdateVo.getCartId())
+                .cartId(cartUpdateVo.getCartId())
                 .selected(cartUpdateVo.isSelected())
                 .build();
     }
 
     public CartInportDto toDeleteDto(CartDeleteRequestVo cartDeleteRequestVo) {
         return CartInportDto.builder()
-                .id(cartDeleteRequestVo.getCartId())
+                .cartId(cartDeleteRequestVo.getCartId())
                 .build();
     }
 }

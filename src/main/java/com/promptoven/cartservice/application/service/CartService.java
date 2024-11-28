@@ -58,7 +58,7 @@ public class CartService implements CartUseCase {
     public void updateCartItem(CartInportDto cartUpdateRequestDto) {
 
         CartOutportDto cartOutportDto = cartRepositoryPort.getCartByCartId(
-                cartUpdateRequestDto.getId()).
+                cartUpdateRequestDto.getCartId()).
                 orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_CART));
 
         Cart cart = cartDomainService.updateCart(cartOutportDto, cartUpdateRequestDto);
@@ -71,7 +71,7 @@ public class CartService implements CartUseCase {
     public void deleteCartItem(CartInportDto cartDeleteRequestDto) {
 
         CartOutportDto cartOutportDto = cartRepositoryPort.getCartByCartId(
-                cartDeleteRequestDto.getId())
+                cartDeleteRequestDto.getCartId())
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_CART));
 
         Cart cart = cartDomainService.deleteCart(cartOutportDto);
