@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
 @Builder
 @Getter
 @ToString
+//여러가지 컬럼이 다 들어감
 public class CartOutportDto {
 
-    //여러가지 컬럼이 다 들어감
     private Long id;
 
     private String memberUuid;
@@ -23,6 +23,6 @@ public class CartOutportDto {
     private boolean deleted;
 
     private LocalDateTime createdDate;
-	
+
     private LocalDateTime lastModifiedDate;
 }
