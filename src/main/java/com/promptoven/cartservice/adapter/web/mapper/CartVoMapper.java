@@ -1,7 +1,6 @@
 package com.promptoven.cartservice.adapter.web.mapper;
 
 import com.promptoven.cartservice.adapter.web.vo.CartCreateRequestVo;
-import com.promptoven.cartservice.adapter.web.vo.CartDeleteRequestVo;
 import com.promptoven.cartservice.adapter.web.vo.CartResponseVo;
 import com.promptoven.cartservice.adapter.web.vo.CartUpdateVo;
 import com.promptoven.cartservice.application.port.in.dto.CartInportDto;
@@ -46,9 +45,9 @@ public class CartVoMapper {
                 .build();
     }
 
-    public CartInportDto toDeleteDto(CartDeleteRequestVo cartDeleteRequestVo) {
+    public CartInportDto toDeleteDto(Long cartId) {
         return CartInportDto.builder()
-                .cartId(cartDeleteRequestVo.getCartId())
+                .cartId(cartId)
                 .build();
     }
 }
