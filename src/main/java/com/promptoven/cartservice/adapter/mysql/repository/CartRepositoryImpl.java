@@ -10,10 +10,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+// output adapter
 @RequiredArgsConstructor
 @Repository
 @Component("cartMysqlAdapter")
-// output adapter
 public class CartRepositoryImpl implements CartRepositoryPort {
 
     private final CartJpaRepository cartJpaRepository;
