@@ -50,4 +50,11 @@ public class CartVoMapper {
                 .cartId(cartId)
                 .build();
     }
+
+    public CartInportDto toExistDto(String productUuid, String memberUuid) {
+        return CartInportDto.builder()
+                .productUuid(productUuid)
+                .memberUuid(memberUuid)
+                .build();
+    }
 }

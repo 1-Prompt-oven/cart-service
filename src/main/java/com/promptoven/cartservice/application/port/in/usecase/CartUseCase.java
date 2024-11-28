@@ -14,4 +14,6 @@ public interface CartUseCase {
     void updateCartItem(CartInportDto cartUpdateRequestDto);
 
     void deleteCartItem(CartInportDto cartDeleteRequestDto);
+
+    Boolean isCartExist(CartInportDto cartInportDto);
 }
