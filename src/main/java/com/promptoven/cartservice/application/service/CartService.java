@@ -3,8 +3,8 @@ package com.promptoven.cartservice.application.service;
 import com.promptoven.cartservice.application.mapper.CartDtoMapper;
 import com.promptoven.cartservice.application.port.in.dto.CartInportDto;
 import com.promptoven.cartservice.application.port.in.usecase.CartUseCase;
-import com.promptoven.cartservice.application.port.out.dto.CartOutportDto;
 import com.promptoven.cartservice.application.port.out.call.CartRepositoryPort;
+import com.promptoven.cartservice.application.port.out.dto.CartOutportDto;
 import com.promptoven.cartservice.domain.model.Cart;
 import com.promptoven.cartservice.domain.service.CartDomainService;
 import com.promptoven.cartservice.global.common.response.BaseResponseStatus;
@@ -41,6 +41,7 @@ public class CartService implements CartUseCase {
         );
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<CartInportDto> getCart(CartInportDto cartGetRequestDto) {
 
@@ -58,7 +59,7 @@ public class CartService implements CartUseCase {
     public void updateCartItem(CartInportDto cartUpdateRequestDto) {
 
         CartOutportDto cartOutportDto = cartRepositoryPort.getCartByCartId(
-                cartUpdateRequestDto.getId()).
+                        cartUpdateRequestDto.getCartId()).
                 orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_CART));
 
         Cart cart = cartDomainService.updateCart(cartOutportDto, cartUpdateRequestDto);
@@ -71,7 +72,7 @@ public class CartService implements CartUseCase {
     public void deleteCartItem(CartInportDto cartDeleteRequestDto) {
 
         CartOutportDto cartOutportDto = cartRepositoryPort.getCartByCartId(
-                cartDeleteRequestDto.getId())
+                        cartDeleteRequestDto.getCartId())
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_CART));
 
         Cart cart = cartDomainService.deleteCart(cartOutportDto);

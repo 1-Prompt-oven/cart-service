@@ -10,11 +10,10 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class RequestMessageDto {
+
     private Long paymentId;
 
     private String memberUuid;
 
     private List<String> productUuids;
-
-
 }

@@ -2,7 +2,6 @@ package com.promptoven.cartservice.adapter.web.controller;
 
 import com.promptoven.cartservice.adapter.web.mapper.CartVoMapper;
 import com.promptoven.cartservice.adapter.web.vo.CartCreateRequestVo;
-import com.promptoven.cartservice.adapter.web.vo.CartDeleteRequestVo;
 import com.promptoven.cartservice.adapter.web.vo.CartResponseVo;
 import com.promptoven.cartservice.adapter.web.vo.CartUpdateVo;
 import com.promptoven.cartservice.application.port.in.dto.CartInportDto;
@@ -51,10 +50,10 @@ public class CartRestController {
     }
 
     @Operation(summary = "장바구니 항목 삭제 API", tags = {"장바구니"})
-    @DeleteMapping()
-    public BaseResponse<Void> deleteCartItem(@RequestBody CartDeleteRequestVo cartDeleteRequestVo) {
+    @DeleteMapping({"/{cartId}"})
+    public BaseResponse<Void> deleteCartItem(@PathVariable Long cartId) {
 
-        cartUseCase.deleteCartItem(cartVoMapper.toDeleteDto(cartDeleteRequestVo));
+        cartUseCase.deleteCartItem(cartVoMapper.toDeleteDto(cartId));
 
         return new BaseResponse<>();
     }

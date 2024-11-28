@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableJpaAuditing
 public class CartserviceApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(CartserviceApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(CartserviceApplication.class, args);
+    }
 
 }

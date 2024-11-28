@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class KafkaConsumer {
 
-//    private static final String CREATE_TOPIC = "payment_create_event";
     private final CartRepositoryPort cartRepositoryPort;
     private final CartDomainService cartDomainService;
     private final CartDtoMapper cartDtoMapper;

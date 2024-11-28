@@ -44,7 +44,7 @@ public class CartDtoMapper {
 
 	public List<CartInportDto> toDtoList(List<Cart> cartList) {
 		return cartList.stream().map(cart -> CartInportDto.builder()
-			.id(cart.getId())
+			.cartId(cart.getId())
 			.memberUuid(cart.getMemberUuid())
 			.productUuid(cart.getProductUuid())
 			.selected(cart.isSelected())

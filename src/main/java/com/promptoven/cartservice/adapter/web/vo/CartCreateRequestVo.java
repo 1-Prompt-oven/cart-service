@@ -6,6 +6,8 @@ import lombok.Getter;
 @Builder
 @Getter
 public class CartCreateRequestVo {
-	private String memberUuid;
-	private String productUuid;
+
+    private final String memberUuid;
+    
+    private final String productUuid;
 }

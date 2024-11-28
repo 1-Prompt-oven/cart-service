@@ -1,22 +1,25 @@
 package com.promptoven.cartservice.adapter.web.vo;
 
-import java.time.LocalDateTime;
-
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @Builder
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
 public class CartResponseVo {
-	private Long id;
-	private String memberUuid;
-	private String productUuid;
-	private boolean selected;
-	private boolean deleted;
-	private LocalDateTime createdDate;
-	private LocalDateTime lastModifiedDate;
+
+    private final Long id;
+
+    private final String memberUuid;
+
+    private final String productUuid;
+
+    private final boolean selected;
+
+    private final boolean deleted;
+
+    private final LocalDateTime createdDate;
+
+    private final LocalDateTime lastModifiedDate;
 }
