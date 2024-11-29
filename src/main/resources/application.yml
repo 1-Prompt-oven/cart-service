@@ -1,27 +1,21 @@
 # 공통 설정
 spring:
+  profiles:
+    active: local
   application:
     name: cart-service
   config:
-    import:
-      - classpath:eventTopic.yml
-      - "optional:configserver:http://config-server:8888"
-  profiles:
-    active: local
-  cloud:
-    config:
-      name: cart-service,eventTopic
-      fail-fast: false
+    import: classpath:eventTopic.yml
 
 springdoc:
   api-docs:
     path: /v3/api-docs
   swagger-ui:
     path: /swagger-ui.html
-    operations-sorter: alpha
   packages-to-scan: com.promptoven.cartservice
   default-produces-media-type: application/json
   default-consumes-media-type: application/json
+  swagger-ui.operations-sorter: alpha
 
 logging:
   level:
@@ -30,12 +24,16 @@ logging:
 server:
   shutdown: graceful
 
+
 # local 설정
 ---
 spring:
   config:
     activate:
       on-profile: local
+    import:
+      - classpath:eventTopic.yml
+      - "optional:configserver:http://config-server:8888"
   datasource:
     url: jdbc:mysql://localhost:3306/cart_service
     username: root
@@ -46,7 +44,8 @@ spring:
       ddl-auto: create
     show-sql: true
     properties:
-      hibernate.dialect: org.hibernate.dialect.MySQL8Dialect
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
   kafka:
     text-bootstrap-servers: localhost:29092,localhost:39092,localhost:49092
   cloud:
@@ -62,6 +61,9 @@ spring:
   config:
     activate:
       on-profile: prod
+    import:
+      - classpath:eventTopic.yml
+      - "optional:configserver:http://config-server:8888"
   datasource:
     url: jdbc:mysql://mysql:3306/cart
     username: root
@@ -72,10 +74,14 @@ spring:
       ddl-auto: update
     show-sql: true
     properties:
-      hibernate.dialect: org.hibernate.dialect.MySQL8Dialect
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
   kafka:
     text-bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
-
+  cloud:
+    config:
+      name: cart-service,eventTopic
+      fail-fast: false
 eureka:
   client:
     serviceUrl:
@@ -85,6 +91,5 @@ eureka:
   instance:
     prefer-ip-address: true
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-
 server:
   port: 8080
