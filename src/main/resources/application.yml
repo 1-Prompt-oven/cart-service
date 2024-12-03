@@ -53,7 +53,7 @@ spring:
       enabled: false
 
 server:
-  port: 8082
+  port: 8081
 
 # prod 설정
 ---
