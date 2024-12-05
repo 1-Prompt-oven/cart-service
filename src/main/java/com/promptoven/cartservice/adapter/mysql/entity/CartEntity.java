@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @Getter
 @Entity
 @Table(name = "cart_entity", indexes = {
-        @Index(name = "idx_cart_entity_member_uuid", columnList = "member_uuid"),
         @Index(name = "idx_cart_entity_member_product_uuid", columnList = "member_uuid, product_uuid")})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CartEntity extends BaseEntity {
